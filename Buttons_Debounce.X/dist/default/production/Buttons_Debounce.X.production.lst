@@ -1,0 +1,1245 @@
+
+
+Microchip Technology PIC18 LITE Macro Assembler V1.35 build -356382666 
+                                                                                               Fri Jan 13 09:31:01 2017
+
+Microchip Technology Omniscient Code Generator v1.35 (Free mode) build 201507080246
+     1                           	processor	18F4520
+     2                           	fnconf	rparam,??,?,0
+     3                           	opt	pw 120
+     4                           	opt	lm
+     5                           	psect	cinit,global,reloc=2,class=CODE,delta=1
+     6                           	psect	bssCOMRAM,global,class=COMRAM,space=1,delta=1
+     7                           	psect	cstackCOMRAM,global,class=COMRAM,space=1,delta=1
+     8                           	psect	text0,global,reloc=2,class=CODE,delta=1
+     9                           	psect	text1,global,reloc=2,class=CODE,delta=1
+    10                           	psect	text2,global,reloc=2,class=CODE,delta=1
+    11                           	psect	text3,global,reloc=2,class=CODE,delta=1
+    12                           	psect	text4,global,reloc=2,class=CODE,delta=1
+    13                           	psect	intcode,global,reloc=2,class=CODE,delta=1
+    14                           	psect	intcode_body,global,reloc=2,class=CODE,delta=1
+    15                           	psect	text6,global,reloc=2,class=CODE,delta=1
+    16                           	psect	text7,global,reloc=2,class=CODE,delta=1
+    17                           	psect	intsave_regs,global,class=BIGRAM,space=1,delta=1
+    18                           	psect	rparam,global,class=COMRAM,space=1,delta=1
+    19                           	psect	temp,global,ovrld,common,class=COMRAM,space=1,delta=1
+    20  0000                     _ADCON1	set	4033
+    21  0000                     _INTCONbits	set	4082
+    22  0000                     _LATC	set	3979
+    23  0000                     _PORTB	set	3969
+    24  0000                     _PORTCbits	set	3970
+    25  0000                     _T0CON	set	4053
+    26  0000                     _T0CONbits	set	4053
+    27  0000                     _TMR0H	set	4055
+    28  0000                     _TMR0L	set	4054
+    29  0000                     _TRISB	set	3987
+    30  0000                     _TRISC	set	3988
+    31                           
+    32                           ; #config settings
+    33  0000                     
+    34                           	psect	cinit
+    35  00022E                     __pcinit:
+    36                           	opt stack 0
+    37  00022E                     start_initialization:
+    38                           	opt stack 0
+    39  00022E                     __initialization:
+    40                           	opt stack 0
+    41                           
+    42                           ; Clear objects allocated to COMRAM (5 bytes)
+    43  00022E  6A1F               	clrf	(__pbssCOMRAM+4)& (0+255),c
+    44  000230  6A1E               	clrf	(__pbssCOMRAM+3)& (0+255),c
+    45  000232  6A1D               	clrf	(__pbssCOMRAM+2)& (0+255),c
+    46  000234  6A1C               	clrf	(__pbssCOMRAM+1)& (0+255),c
+    47  000236  6A1B               	clrf	__pbssCOMRAM& (0+255),c
+    48  000238                     end_of_initialization:
+    49                           	opt stack 0
+    50  000238                     __end_of__initialization:
+    51                           	opt stack 0
+    52  000238  9020               	bcf	int$flags,0,c	;clear compiler interrupt flag (level 1)
+    53  00023A  9220               	bcf	int$flags,1,c	;clear compiler interrupt flag (level 2)
+    54  00023C  0E00               	movlw	low (__Lmediumconst shr (0+16))
+    55  00023E  6EF8               	movwf	tblptru,c
+    56  000240  0100               	movlb	0
+    57  000242  EF09  F001         	goto	_main	;jump to C main() function
+    58                           tblptru	equ	0xFF8
+    59                           
+    60                           	psect	bssCOMRAM
+    61  00001B                     __pbssCOMRAM:
+    62                           	opt stack 0
+    63  00001B                     Find_Button_Press@Button_Count:
+    64                           	opt stack 0
+    65  00001B                     	ds	1
+    66  00001C                     Find_Button_Press@Button_State:
+    67                           	opt stack 0
+    68  00001C                     	ds	1
+    69  00001D                     Find_Button_Press@Temp_Press:
+    70                           	opt stack 0
+    71  00001D                     	ds	1
+    72  00001E                     _Button_Press:
+    73                           	opt stack 0
+    74  00001E                     	ds	1
+    75  00001F                     _count_test:
+    76                           	opt stack 0
+    77  00001F                     	ds	1
+    78                           tblptru	equ	0xFF8
+    79                           
+    80                           	psect	cstackCOMRAM
+    81  000001                     __pcstackCOMRAM:
+    82                           	opt stack 0
+    83  000001                     i2WriteTimer0@timer0:
+    84                           	opt stack 0
+    85                           
+    86                           ; 2 bytes @ 0x0
+    87  000001                     	ds	2
+    88  000003                     i2WriteTimer0@timer:
+    89                           	opt stack 0
+    90                           
+    91                           ; 2 bytes @ 0x2
+    92  000003                     	ds	2
+    93  000005                     ??_myIsr:
+    94                           
+    95                           ; 0 bytes @ 0x4
+    96  000005                     	ds	15
+    97  000014                     ??_delay_s:
+    98  000014                     OpenTimer0@config:
+    99                           	opt stack 0
+   100  000014                     WriteTimer0@timer0:
+   101                           	opt stack 0
+   102                           
+   103                           ; 2 bytes @ 0x13
+   104  000014                     	ds	1
+   105  000015                     delay_s@secs:
+   106                           	opt stack 0
+   107                           
+   108                           ; 1 bytes @ 0x14
+   109  000015                     	ds	1
+   110  000016                     delay_s@j:
+   111                           	opt stack 0
+   112  000016                     WriteTimer0@timer:
+   113                           	opt stack 0
+   114                           
+   115                           ; 2 bytes @ 0x15
+   116  000016                     	ds	1
+   117  000017                     delay_s@i:
+   118                           	opt stack 0
+   119                           
+   120                           ; 1 bytes @ 0x16
+   121  000017                     	ds	1
+   122  000018                     ??_Initial:
+   123                           
+   124                           ; 0 bytes @ 0x17
+   125  000018                     	ds	1
+   126  000019                     Initial@i:
+   127                           	opt stack 0
+   128                           
+   129                           ; 2 bytes @ 0x18
+   130  000019                     	ds	2
+   131  00001B                     tblptru	equ	0xFF8
+   132                           
+   133                           ; 0 bytes @ 0x1A
+   134 ;;
+   135 ;;Main: autosize = 0, tempsize = 0, incstack = 0, save=0
+   136 ;;
+   137 ;; *************** function _main *****************
+   138 ;; Defined at:
+   139 ;;		line 62 in file "Button_app_1.c"
+   140 ;; Parameters:    Size  Location     Type
+   141 ;;		None
+   142 ;; Auto vars:     Size  Location     Type
+   143 ;;		None
+   144 ;; Return value:  Size  Location     Type
+   145 ;;		None               void
+   146 ;; Registers used:
+   147 ;;		wreg, status,2, status,0, cstack
+   148 ;; Tracked objects:
+   149 ;;		On entry : 0/0
+   150 ;;		On exit  : 0/0
+   151 ;;		Unchanged: 0/0
+   152 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
+   153 ;;      Params:         0       0       0       0       0       0       0
+   154 ;;      Locals:         0       0       0       0       0       0       0
+   155 ;;      Temps:          0       0       0       0       0       0       0
+   156 ;;      Totals:         0       0       0       0       0       0       0
+   157 ;;Total ram usage:        0 bytes
+   158 ;; Hardware stack levels required when called:    4
+   159 ;; This function calls:
+   160 ;;		_Initial
+   161 ;; This function is called by:
+   162 ;;		Startup code after reset
+   163 ;; This function uses a non-reentrant model
+   164 ;;
+   165                           
+   166                           	psect	text0
+   167  000212                     __ptext0:
+   168                           	opt stack 0
+   169  000212                     _main:
+   170                           	opt stack 27
+   171                           
+   172                           ;Button_app_1.c: 64: Button_Press.Full = 0x00;
+   173                           
+   174                           ;incstack = 0
+   175  000212  0E00               	movlw	0
+   176  000214  6E1E               	movwf	_Button_Press,c
+   177                           
+   178                           ;Button_app_1.c: 66: Initial();
+   179  000216  ECA4  F000         	call	_Initial	;wreg free
+   180  00021A                     l904:
+   181                           
+   182                           ;Button_app_1.c: 69: {
+   183                           ;Button_app_1.c: 74: if((Button_Press.Full !=0 ? 1:0))
+   184  00021A  501E               	movf	_Button_Press,w,c
+   185  00021C  B4D8               	btfsc	status,2,c
+   186  00021E  D7FD               	goto	l904
+   187                           
+   188                           ;Button_app_1.c: 75: {
+   189                           ;Button_app_1.c: 76: if(Button_Press.B0)
+   190  000220  B01E               	btfsc	_Button_Press,0,c
+   191                           
+   192                           ;Button_app_1.c: 77: PORTCbits.RC0 = 1;
+   193  000222  8082               	bsf	3970,0,c	;volatile
+   194                           
+   195                           ;Button_app_1.c: 79: if (Button_Press.B1)
+   196  000224  B21E               	btfsc	_Button_Press,1,c
+   197                           
+   198                           ;Button_app_1.c: 80: PORTCbits.RC0 = 0;
+   199  000226  9082               	bcf	3970,0,c	;volatile
+   200                           
+   201                           ;Button_app_1.c: 83: Button_Press.Full=0x00;
+   202  000228  0E00               	movlw	0
+   203  00022A  6E1E               	movwf	_Button_Press,c
+   204  00022C  D7F6               	goto	l904
+   205  00022E                     __end_of_main:
+   206                           	opt stack 0
+   207                           tblptru	equ	0xFF8
+   208                           status	equ	0xFD8
+   209                           
+   210 ;; *************** function _Initial *****************
+   211 ;; Defined at:
+   212 ;;		line 91 in file "Button_app_1.c"
+   213 ;; Parameters:    Size  Location     Type
+   214 ;;		None
+   215 ;; Auto vars:     Size  Location     Type
+   216 ;;  i               2   24[COMRAM] unsigned int 
+   217 ;; Return value:  Size  Location     Type
+   218 ;;		None               void
+   219 ;; Registers used:
+   220 ;;		wreg, status,2, status,0, cstack
+   221 ;; Tracked objects:
+   222 ;;		On entry : 0/0
+   223 ;;		On exit  : 0/0
+   224 ;;		Unchanged: 0/0
+   225 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
+   226 ;;      Params:         0       0       0       0       0       0       0
+   227 ;;      Locals:         2       0       0       0       0       0       0
+   228 ;;      Temps:          1       0       0       0       0       0       0
+   229 ;;      Totals:         3       0       0       0       0       0       0
+   230 ;;Total ram usage:        3 bytes
+   231 ;; Hardware stack levels used:    1
+   232 ;; Hardware stack levels required when called:    3
+   233 ;; This function calls:
+   234 ;;		_OpenTimer0
+   235 ;;		_WriteTimer0
+   236 ;;		_delay_s
+   237 ;; This function is called by:
+   238 ;;		_main
+   239 ;; This function uses a non-reentrant model
+   240 ;;
+   241                           
+   242                           	psect	text1
+   243  000148                     __ptext1:
+   244                           	opt stack 0
+   245  000148                     _Initial:
+   246                           	opt stack 27
+   247                           
+   248                           ;Button_app_1.c: 93: ADCON1 = 0x0F;
+   249                           
+   250                           ;incstack = 0
+   251  000148  0E0F               	movlw	15
+   252  00014A  6EC1               	movwf	4033,c	;volatile
+   253                           
+   254                           ;Button_app_1.c: 94: TRISB = 0xFF;
+   255  00014C  6893               	setf	3987,c	;volatile
+   256                           
+   257                           ;Button_app_1.c: 95: TRISC = 0x00;
+   258  00014E  0E00               	movlw	0
+   259  000150  6E94               	movwf	3988,c	;volatile
+   260                           
+   261                           ;Button_app_1.c: 97: LATC = 0x00;
+   262  000152  0E00               	movlw	0
+   263  000154  6E8B               	movwf	3979,c	;volatile
+   264                           
+   265                           ;Button_app_1.c: 98: delay_s(1);
+   266  000156  0E01               	movlw	1
+   267  000158  ECDF  F000         	call	_delay_s
+   268                           
+   269                           ;Button_app_1.c: 99: LATC = 0xff;
+   270  00015C  688B               	setf	3979,c	;volatile
+   271                           
+   272                           ;Button_app_1.c: 100: delay_s(1);
+   273  00015E  0E01               	movlw	1
+   274  000160  ECDF  F000         	call	_delay_s
+   275                           
+   276                           ;Button_app_1.c: 101: LATC = 0x00;
+   277  000164  0E00               	movlw	0
+   278  000166  6E8B               	movwf	3979,c	;volatile
+   279                           
+   280                           ;Button_app_1.c: 103: for(unsigned int i =0; i<1000;i++)
+   281  000168  0E00               	movlw	0
+   282  00016A  6E1A               	movwf	Initial@i+1,c
+   283  00016C  0E00               	movlw	0
+   284  00016E  6E19               	movwf	Initial@i,c
+   285  000170                     l860:
+   286  000170  0EE8               	movlw	232
+   287  000172  5C19               	subwf	Initial@i,w,c
+   288  000174  0E03               	movlw	3
+   289  000176  581A               	subwfb	Initial@i+1,w,c
+   290  000178  B0D8               	btfsc	status,0,c
+   291  00017A  D00D               	goto	l48
+   292                           
+   293                           ;Button_app_1.c: 104: {
+   294                           ;Button_app_1.c: 105: LATC = PORTB;
+   295  00017C  CF81 FF8B          	movff	3969,3979	;volatile
+   296                           
+   297                           ;Button_app_1.c: 106: _delay((unsigned long)((10)*(19660800/4000.0)));
+   298  000180  0E40               	movlw	64
+   299  000182  6E18               	movwf	??_Initial& (0+255),c
+   300  000184  0ED4               	movlw	212
+   301  000186                     u277:
+   302  000186  2EE8               	decfsz	wreg,f,c
+   303  000188  D7FE               	goto	u277
+   304  00018A  2E18               	decfsz	??_Initial& (0+255),f,c
+   305  00018C  D7FC               	goto	u277
+   306  00018E  D000               	nop2	
+   307  000190  4A19               	infsnz	Initial@i,f,c
+   308  000192  2A1A               	incf	Initial@i+1,f,c
+   309  000194  D7ED               	goto	l860
+   310  000196                     l48:
+   311                           
+   312                           ;Button_app_1.c: 107: }
+   313                           ;Button_app_1.c: 109: LATC = 0xff;
+   314  000196  688B               	setf	3979,c	;volatile
+   315                           
+   316                           ;Button_app_1.c: 110: delay_s(1);
+   317  000198  0E01               	movlw	1
+   318  00019A  ECDF  F000         	call	_delay_s
+   319                           
+   320                           ;Button_app_1.c: 111: LATC = 0x00;
+   321  00019E  0E00               	movlw	0
+   322  0001A0  6E8B               	movwf	3979,c	;volatile
+   323                           
+   324                           ;Button_app_1.c: 112: delay_s(1);
+   325  0001A2  0E01               	movlw	1
+   326  0001A4  ECDF  F000         	call	_delay_s
+   327                           
+   328                           ;Button_app_1.c: 114: OpenTimer0( 0b11111111 & 0b10111111 & 0b11011111 & 0b11110000);
+   329  0001A8  0E90               	movlw	144
+   330  0001AA  ECF9  F000         	call	_OpenTimer0
+   331                           
+   332                           ;Button_app_1.c: 115: WriteTimer0(40960);
+   333  0001AE  0EA0               	movlw	160
+   334  0001B0  6E15               	movwf	WriteTimer0@timer0+1,c
+   335  0001B2  0E00               	movlw	0
+   336  0001B4  6E14               	movwf	WriteTimer0@timer0,c
+   337  0001B6  EC23  F001         	call	_WriteTimer0	;wreg free
+   338                           
+   339                           ;Button_app_1.c: 116: (INTCONbits.GIE = 1);
+   340  0001BA  8EF2               	bsf	intcon,7,c	;volatile
+   341  0001BC  0012               	return		;funcret
+   342  0001BE                     __end_of_Initial:
+   343                           	opt stack 0
+   344                           tblptru	equ	0xFF8
+   345                           intcon	equ	0xFF2
+   346                           wreg	equ	0xFE8
+   347                           status	equ	0xFD8
+   348                           
+   349 ;; *************** function _delay_s *****************
+   350 ;; Defined at:
+   351 ;;		line 121 in file "Button_app_1.c"
+   352 ;; Parameters:    Size  Location     Type
+   353 ;;  secs            1    wreg     unsigned char 
+   354 ;; Auto vars:     Size  Location     Type
+   355 ;;  secs            1   20[COMRAM] unsigned char 
+   356 ;;  i               1   22[COMRAM] unsigned char 
+   357 ;;  j               1   21[COMRAM] unsigned char 
+   358 ;; Return value:  Size  Location     Type
+   359 ;;		None               void
+   360 ;; Registers used:
+   361 ;;		wreg, status,2, status,0
+   362 ;; Tracked objects:
+   363 ;;		On entry : 0/0
+   364 ;;		On exit  : 0/0
+   365 ;;		Unchanged: 0/0
+   366 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
+   367 ;;      Params:         0       0       0       0       0       0       0
+   368 ;;      Locals:         3       0       0       0       0       0       0
+   369 ;;      Temps:          1       0       0       0       0       0       0
+   370 ;;      Totals:         4       0       0       0       0       0       0
+   371 ;;Total ram usage:        4 bytes
+   372 ;; Hardware stack levels used:    1
+   373 ;; Hardware stack levels required when called:    2
+   374 ;; This function calls:
+   375 ;;		Nothing
+   376 ;; This function is called by:
+   377 ;;		_Initial
+   378 ;; This function uses a non-reentrant model
+   379 ;;
+   380                           
+   381                           	psect	text2
+   382  0001BE                     __ptext2:
+   383                           	opt stack 0
+   384  0001BE                     _delay_s:
+   385                           	opt stack 27
+   386                           
+   387                           ;incstack = 0
+   388                           ;delay_s@secs stored from wreg
+   389  0001BE  6E15               	movwf	delay_s@secs,c
+   390                           
+   391                           ;Button_app_1.c: 123: unsigned char i,j;
+   392                           ;Button_app_1.c: 124: for(j=0;j<secs;j++)
+   393  0001C0  0E00               	movlw	0
+   394  0001C2  6E16               	movwf	delay_s@j,c
+   395  0001C4  D011               	goto	l742
+   396  0001C6                     l730:
+   397                           
+   398                           ;Button_app_1.c: 125: {
+   399                           ;Button_app_1.c: 126: for (i=0;i<25;i++)
+   400  0001C6  0E00               	movlw	0
+   401  0001C8  6E17               	movwf	delay_s@i,c
+   402  0001CA                     l732:
+   403  0001CA  0E18               	movlw	24
+   404  0001CC  6417               	cpfsgt	delay_s@i,c
+   405  0001CE  D001               	goto	l736
+   406  0001D0  D00A               	goto	l740
+   407  0001D2                     l736:
+   408                           
+   409                           ;Button_app_1.c: 127: _delay((unsigned long)((40)*(19660800/4000.0)));
+   410  0001D2  0E00               	movlw	0
+   411  0001D4  6E14               	movwf	??_delay_s& (0+255),c
+   412  0001D6  0E54               	movlw	84
+   413  0001D8                     u287:
+   414  0001D8  2EE8               	decfsz	wreg,f,c
+   415  0001DA  D7FE               	goto	u287
+   416  0001DC  2E14               	decfsz	??_delay_s& (0+255),f,c
+   417  0001DE  D7FC               	goto	u287
+   418  0001E0  D000               	nop2	
+   419  0001E2  2A17               	incf	delay_s@i,f,c
+   420  0001E4  D7F2               	goto	l732
+   421  0001E6                     l740:
+   422  0001E6  2A16               	incf	delay_s@j,f,c
+   423  0001E8                     l742:
+   424  0001E8  5015               	movf	delay_s@secs,w,c
+   425  0001EA  5C16               	subwf	delay_s@j,w,c
+   426  0001EC  B0D8               	btfsc	status,0,c
+   427  0001EE  0012               	return	
+   428  0001F0  D7EA               	goto	l730
+   429  0001F2                     __end_of_delay_s:
+   430                           	opt stack 0
+   431                           tblptru	equ	0xFF8
+   432                           intcon	equ	0xFF2
+   433                           wreg	equ	0xFE8
+   434                           status	equ	0xFD8
+   435                           
+   436 ;; *************** function _WriteTimer0 *****************
+   437 ;; Defined at:
+   438 ;;		line 16 in file "C:\Program Files (x86)\Microchip\xc8\v1.35\sources\pic18\plib\Timers\t0write.c"
+   439 ;; Parameters:    Size  Location     Type
+   440 ;;  timer0          2   19[COMRAM] unsigned int 
+   441 ;; Auto vars:     Size  Location     Type
+   442 ;;  timer           2   21[COMRAM] struct Timers
+   443 ;; Return value:  Size  Location     Type
+   444 ;;		None               void
+   445 ;; Registers used:
+   446 ;;		None
+   447 ;; Tracked objects:
+   448 ;;		On entry : 0/0
+   449 ;;		On exit  : 0/0
+   450 ;;		Unchanged: 0/0
+   451 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
+   452 ;;      Params:         2       0       0       0       0       0       0
+   453 ;;      Locals:         2       0       0       0       0       0       0
+   454 ;;      Temps:          0       0       0       0       0       0       0
+   455 ;;      Totals:         4       0       0       0       0       0       0
+   456 ;;Total ram usage:        4 bytes
+   457 ;; Hardware stack levels used:    1
+   458 ;; Hardware stack levels required when called:    2
+   459 ;; This function calls:
+   460 ;;		Nothing
+   461 ;; This function is called by:
+   462 ;;		_Initial
+   463 ;; This function uses a non-reentrant model
+   464 ;;
+   465                           
+   466                           	psect	text3
+   467  000246                     __ptext3:
+   468                           	opt stack 0
+   469  000246                     _WriteTimer0:
+   470                           	opt stack 27
+   471                           
+   472                           ;incstack = 0
+   473  000246  C014  F016         	movff	WriteTimer0@timer0,WriteTimer0@timer
+   474  00024A  C015  F017         	movff	WriteTimer0@timer0+1,WriteTimer0@timer+1
+   475  00024E  C017  FFD7         	movff	WriteTimer0@timer+1,4055	;volatile
+   476  000252  C016  FFD6         	movff	WriteTimer0@timer,4054	;volatile
+   477  000256  0012               	return		;funcret
+   478  000258                     __end_of_WriteTimer0:
+   479                           	opt stack 0
+   480                           tblptru	equ	0xFF8
+   481                           intcon	equ	0xFF2
+   482                           wreg	equ	0xFE8
+   483                           status	equ	0xFD8
+   484                           
+   485 ;; *************** function _OpenTimer0 *****************
+   486 ;; Defined at:
+   487 ;;		line 18 in file "C:\Program Files (x86)\Microchip\xc8\v1.35\sources\pic18\plib\Timers\t0open.c"
+   488 ;; Parameters:    Size  Location     Type
+   489 ;;  config          1    wreg     unsigned char 
+   490 ;; Auto vars:     Size  Location     Type
+   491 ;;  config          1   19[COMRAM] unsigned char 
+   492 ;; Return value:  Size  Location     Type
+   493 ;;		None               void
+   494 ;; Registers used:
+   495 ;;		wreg, status,2, status,0
+   496 ;; Tracked objects:
+   497 ;;		On entry : 0/0
+   498 ;;		On exit  : 0/0
+   499 ;;		Unchanged: 0/0
+   500 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
+   501 ;;      Params:         0       0       0       0       0       0       0
+   502 ;;      Locals:         1       0       0       0       0       0       0
+   503 ;;      Temps:          0       0       0       0       0       0       0
+   504 ;;      Totals:         1       0       0       0       0       0       0
+   505 ;;Total ram usage:        1 bytes
+   506 ;; Hardware stack levels used:    1
+   507 ;; Hardware stack levels required when called:    2
+   508 ;; This function calls:
+   509 ;;		Nothing
+   510 ;; This function is called by:
+   511 ;;		_Initial
+   512 ;; This function uses a non-reentrant model
+   513 ;;
+   514                           
+   515                           	psect	text4
+   516  0001F2                     __ptext4:
+   517                           	opt stack 0
+   518  0001F2                     _OpenTimer0:
+   519                           	opt stack 27
+   520                           
+   521                           ;incstack = 0
+   522                           ;OpenTimer0@config stored from wreg
+   523  0001F2  6E14               	movwf	OpenTimer0@config,c
+   524  0001F4  5014               	movf	OpenTimer0@config,w,c
+   525  0001F6  0B7F               	andlw	127
+   526  0001F8  6ED5               	movwf	4053,c	;volatile
+   527  0001FA  0E00               	movlw	0
+   528  0001FC  6ED7               	movwf	4055,c	;volatile
+   529  0001FE  0E00               	movlw	0
+   530  000200  6ED6               	movwf	4054,c	;volatile
+   531  000202  94F2               	bcf	intcon,2,c	;volatile
+   532  000204  AE14               	btfss	OpenTimer0@config,7,c
+   533  000206  D002               	goto	l95
+   534  000208  8AF2               	bsf	intcon,5,c	;volatile
+   535  00020A  D001               	goto	l96
+   536  00020C                     l95:
+   537  00020C  9AF2               	bcf	intcon,5,c	;volatile
+   538  00020E                     l96:
+   539  00020E  8ED5               	bsf	4053,7,c	;volatile
+   540  000210  0012               	return		;funcret
+   541  000212                     __end_of_OpenTimer0:
+   542                           	opt stack 0
+   543                           tblptru	equ	0xFF8
+   544                           intcon	equ	0xFF2
+   545                           wreg	equ	0xFE8
+   546                           status	equ	0xFD8
+   547                           
+   548 ;; *************** function _myIsr *****************
+   549 ;; Defined at:
+   550 ;;		line 42 in file "Button_app_1.c"
+   551 ;; Parameters:    Size  Location     Type
+   552 ;;		None
+   553 ;; Auto vars:     Size  Location     Type
+   554 ;;		None
+   555 ;; Return value:  Size  Location     Type
+   556 ;;		None               void
+   557 ;; Registers used:
+   558 ;;		wreg, status,2, status,0, cstack
+   559 ;; Tracked objects:
+   560 ;;		On entry : 0/0
+   561 ;;		On exit  : 0/0
+   562 ;;		Unchanged: 0/0
+   563 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
+   564 ;;      Params:         0       0       0       0       0       0       0
+   565 ;;      Locals:         0       0       0       0       0       0       0
+   566 ;;      Temps:         15       0       0       0       0       0       0
+   567 ;;      Totals:        15       0       0       0       0       0       0
+   568 ;;Total ram usage:       15 bytes
+   569 ;; Hardware stack levels used:    1
+   570 ;; Hardware stack levels required when called:    1
+   571 ;; This function calls:
+   572 ;;		_Find_Button_Press
+   573 ;;		i2_WriteTimer0
+   574 ;; This function is called by:
+   575 ;;		Interrupt level 2
+   576 ;; This function uses a non-reentrant model
+   577 ;;
+   578                           
+   579                           	psect	intcode
+   580  000008                     __pintcode:
+   581                           	opt stack 0
+   582  000008                     _myIsr:
+   583                           	opt stack 27
+   584                           
+   585                           ;incstack = 0
+   586  000008  8220               	bsf	btemp,1,c	;set compiler interrupt flag (level 2)
+   587  00000A  CFFA F006          	movff	pclath,??_myIsr+1
+   588  00000E  CFFB F007          	movff	pclatu,??_myIsr+2
+   589  000012  ED0D  F000         	call	int_func,f	;refresh shadow registers
+   590                           pclatu	equ	0xFFB
+   591                           pclath	equ	0xFFA
+   592                           tblptru	equ	0xFF8
+   593                           intcon	equ	0xFF2
+   594                           wreg	equ	0xFE8
+   595                           status	equ	0xFD8
+   596                           
+   597                           	psect	intcode_body
+   598  00001A                     __pintcode_body:
+   599                           	opt stack 27
+   600  00001A                     int_func:
+   601                           	opt stack 27
+   602  00001A  0006               	pop		; remove dummy address from shadow register refresh
+   603  00001C  CFE9 F008          	movff	fsr0l,??_myIsr+3
+   604  000020  CFEA F009          	movff	fsr0h,??_myIsr+4
+   605  000024  CFE1 F00A          	movff	fsr1l,??_myIsr+5
+   606  000028  CFE2 F00B          	movff	fsr1h,??_myIsr+6
+   607  00002C  CFD9 F00C          	movff	fsr2l,??_myIsr+7
+   608  000030  CFDA F00D          	movff	fsr2h,??_myIsr+8
+   609  000034  CFF3 F00E          	movff	prodl,??_myIsr+9
+   610  000038  CFF4 F00F          	movff	prodh,??_myIsr+10
+   611  00003C  CFF6 F010          	movff	tblptrl,??_myIsr+11
+   612  000040  CFF7 F011          	movff	tblptrh,??_myIsr+12
+   613  000044  CFF8 F012          	movff	tblptru,??_myIsr+13
+   614  000048  CFF5 F013          	movff	tablat,??_myIsr+14
+   615                           
+   616                           ;Button_app_1.c: 46: if(INTCONbits.TMR0IE && INTCONbits.TMR0IF) {
+   617  00004C  BAF2               	btfsc	intcon,5,c	;volatile
+   618  00004E  A4F2               	btfss	intcon,2,c	;volatile
+   619  000050  D01E               	goto	i2l35
+   620                           
+   621                           ;Button_app_1.c: 48: Find_Button_Press();
+   622  000052  EC65  F000         	call	_Find_Button_Press	;wreg free
+   623                           
+   624                           ;Button_app_1.c: 49: WriteTimer0(40960);
+   625  000056  0EA0               	movlw	160
+   626  000058  6E02               	movwf	i2WriteTimer0@timer0+1,c
+   627  00005A  0E00               	movlw	0
+   628  00005C  6E01               	movwf	i2WriteTimer0@timer0,c
+   629  00005E  EC2C  F001         	call	i2_WriteTimer0	;wreg free
+   630                           
+   631                           ;Button_app_1.c: 50: INTCONbits.TMR0IF = 0;
+   632  000062  94F2               	bcf	intcon,2,c	;volatile
+   633                           
+   634                           ;Button_app_1.c: 52: count_test++;
+   635  000064  2A1F               	incf	_count_test,f,c
+   636                           
+   637                           ;Button_app_1.c: 53: if(count_test == 100){
+   638  000066  0E64               	movlw	100
+   639  000068  181F               	xorwf	_count_test,w,c
+   640  00006A  A4D8               	btfss	status,2,c
+   641  00006C  D010               	goto	i2l35
+   642                           
+   643                           ;Button_app_1.c: 54: PORTCbits.RC7 = ~PORTCbits.RC7;
+   644  00006E  AE82               	btfss	3970,7,c	;volatile
+   645  000070  D002               	goto	i2u23_40
+   646  000072  0E01               	movlw	1
+   647  000074  D001               	goto	i2u23_46
+   648  000076                     i2u23_40:
+   649  000076  0E00               	movlw	0
+   650  000078                     i2u23_46:
+   651  000078  0AFF               	xorlw	255
+   652  00007A  6E05               	movwf	??_myIsr& (0+255),c
+   653  00007C  3205               	rrcf	??_myIsr,f,c
+   654  00007E  3205               	rrcf	??_myIsr,f,c
+   655  000080  5082               	movf	3970,w,c	;volatile
+   656  000082  1805               	xorwf	??_myIsr,w,c
+   657  000084  0B7F               	andlw	-129
+   658  000086  1805               	xorwf	??_myIsr,w,c
+   659  000088  6E82               	movwf	3970,c	;volatile
+   660                           
+   661                           ;Button_app_1.c: 55: count_test = 0;
+   662  00008A  0E00               	movlw	0
+   663  00008C  6E1F               	movwf	_count_test,c
+   664  00008E                     i2l35:
+   665  00008E  C013  FFF5         	movff	??_myIsr+14,tablat
+   666  000092  C012  FFF8         	movff	??_myIsr+13,tblptru
+   667  000096  C011  FFF7         	movff	??_myIsr+12,tblptrh
+   668  00009A  C010  FFF6         	movff	??_myIsr+11,tblptrl
+   669  00009E  C00F  FFF4         	movff	??_myIsr+10,prodh
+   670  0000A2  C00E  FFF3         	movff	??_myIsr+9,prodl
+   671  0000A6  C00D  FFDA         	movff	??_myIsr+8,fsr2h
+   672  0000AA  C00C  FFD9         	movff	??_myIsr+7,fsr2l
+   673  0000AE  C00B  FFE2         	movff	??_myIsr+6,fsr1h
+   674  0000B2  C00A  FFE1         	movff	??_myIsr+5,fsr1l
+   675  0000B6  C009  FFEA         	movff	??_myIsr+4,fsr0h
+   676  0000BA  C008  FFE9         	movff	??_myIsr+3,fsr0l
+   677  0000BE  C007  FFFB         	movff	??_myIsr+2,pclatu
+   678  0000C2  C006  FFFA         	movff	??_myIsr+1,pclath
+   679  0000C6  9220               	bcf	btemp,1,c	;clear compiler interrupt flag (level 2)
+   680  0000C8  0011               	retfie		f
+   681  0000CA                     __end_of_myIsr:
+   682                           	opt stack 0
+   683                           pclatu	equ	0xFFB
+   684                           pclath	equ	0xFFA
+   685                           tblptru	equ	0xFF8
+   686                           tblptrh	equ	0xFF7
+   687                           tblptrl	equ	0xFF6
+   688                           tablat	equ	0xFF5
+   689                           prodh	equ	0xFF4
+   690                           prodl	equ	0xFF3
+   691                           intcon	equ	0xFF2
+   692                           fsr0h	equ	0xFEA
+   693                           fsr0l	equ	0xFE9
+   694                           wreg	equ	0xFE8
+   695                           fsr1h	equ	0xFE2
+   696                           fsr1l	equ	0xFE1
+   697                           fsr2h	equ	0xFDA
+   698                           fsr2l	equ	0xFD9
+   699                           status	equ	0xFD8
+   700                           
+   701 ;; *************** function i2_WriteTimer0 *****************
+   702 ;; Defined at:
+   703 ;;		line 16 in file "C:\Program Files (x86)\Microchip\xc8\v1.35\sources\pic18\plib\Timers\t0write.c"
+   704 ;; Parameters:    Size  Location     Type
+   705 ;;  timer0          2    0[COMRAM] unsigned int 
+   706 ;; Auto vars:     Size  Location     Type
+   707 ;;  WriteTimer0     2    2[COMRAM] struct Timers
+   708 ;; Return value:  Size  Location     Type
+   709 ;;		None               void
+   710 ;; Registers used:
+   711 ;;		None
+   712 ;; Tracked objects:
+   713 ;;		On entry : 0/0
+   714 ;;		On exit  : 0/0
+   715 ;;		Unchanged: 0/0
+   716 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
+   717 ;;      Params:         2       0       0       0       0       0       0
+   718 ;;      Locals:         2       0       0       0       0       0       0
+   719 ;;      Temps:          0       0       0       0       0       0       0
+   720 ;;      Totals:         4       0       0       0       0       0       0
+   721 ;;Total ram usage:        4 bytes
+   722 ;; Hardware stack levels used:    1
+   723 ;; This function calls:
+   724 ;;		Nothing
+   725 ;; This function is called by:
+   726 ;;		_myIsr
+   727 ;; This function uses a non-reentrant model
+   728 ;;
+   729                           
+   730                           	psect	text6
+   731  000258                     __ptext6:
+   732                           	opt stack 0
+   733  000258                     i2_WriteTimer0:
+   734                           	opt stack 27
+   735                           
+   736                           ;incstack = 0
+   737  000258  C001  F003         	movff	i2WriteTimer0@timer0,i2WriteTimer0@timer
+   738  00025C  C002  F004         	movff	i2WriteTimer0@timer0+1,i2WriteTimer0@timer+1
+   739  000260  C004  FFD7         	movff	i2WriteTimer0@timer+1,4055	;volatile
+   740  000264  C003  FFD6         	movff	i2WriteTimer0@timer,4054	;volatile
+   741  000268  0012               	return		;funcret
+   742  00026A                     __end_ofi2_WriteTimer0:
+   743                           	opt stack 0
+   744                           pclatu	equ	0xFFB
+   745                           pclath	equ	0xFFA
+   746                           tblptru	equ	0xFF8
+   747                           tblptrh	equ	0xFF7
+   748                           tblptrl	equ	0xFF6
+   749                           tablat	equ	0xFF5
+   750                           prodh	equ	0xFF4
+   751                           prodl	equ	0xFF3
+   752                           intcon	equ	0xFF2
+   753                           fsr0h	equ	0xFEA
+   754                           fsr0l	equ	0xFE9
+   755                           wreg	equ	0xFE8
+   756                           fsr1h	equ	0xFE2
+   757                           fsr1l	equ	0xFE1
+   758                           fsr2h	equ	0xFDA
+   759                           fsr2l	equ	0xFD9
+   760                           status	equ	0xFD8
+   761                           
+   762 ;; *************** function _Find_Button_Press *****************
+   763 ;; Defined at:
+   764 ;;		line 26 in file "Buttons_Debounce.c"
+   765 ;; Parameters:    Size  Location     Type
+   766 ;;		None
+   767 ;; Auto vars:     Size  Location     Type
+   768 ;;		None
+   769 ;; Return value:  Size  Location     Type
+   770 ;;		None               void
+   771 ;; Registers used:
+   772 ;;		wreg, status,2, status,0
+   773 ;; Tracked objects:
+   774 ;;		On entry : 0/0
+   775 ;;		On exit  : 0/0
+   776 ;;		Unchanged: 0/0
+   777 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
+   778 ;;      Params:         0       0       0       0       0       0       0
+   779 ;;      Locals:         0       0       0       0       0       0       0
+   780 ;;      Temps:          0       0       0       0       0       0       0
+   781 ;;      Totals:         0       0       0       0       0       0       0
+   782 ;;Total ram usage:        0 bytes
+   783 ;; Hardware stack levels used:    1
+   784 ;; This function calls:
+   785 ;;		Nothing
+   786 ;; This function is called by:
+   787 ;;		_myIsr
+   788 ;; This function uses a non-reentrant model
+   789 ;;
+   790                           
+   791                           	psect	text7
+   792  0000CA                     __ptext7:
+   793                           	opt stack 0
+   794  0000CA                     _Find_Button_Press:
+   795                           	opt stack 27
+   796                           
+   797                           ;Buttons_Debounce.c: 28: static states Button_State=Waiting;
+   798                           ;Buttons_Debounce.c: 29: static unsigned char Button_Count=0;
+   799                           ;Buttons_Debounce.c: 30: static Bit_Mask Temp_Press;
+   800                           ;Buttons_Debounce.c: 34: switch (Button_State){
+   801                           
+   802                           ;incstack = 0
+   803  0000CA  D030               	goto	i2l782
+   804  0000CC                     i2l758:
+   805                           
+   806                           ;Buttons_Debounce.c: 36: if(PORTB)
+   807  0000CC  5081               	movf	3969,w,c	;volatile
+   808  0000CE  B4D8               	btfsc	status,2,c
+   809  0000D0  0012               	return	
+   810                           
+   811                           ;Buttons_Debounce.c: 37: {
+   812                           ;Buttons_Debounce.c: 38: Button_State = Detected;
+   813  0000D2  0E01               	movlw	1
+   814  0000D4  6E1C               	movwf	Find_Button_Press@Button_State,c
+   815                           
+   816                           ;Buttons_Debounce.c: 39: Button_Count = 0;
+   817  0000D6  0E00               	movlw	0
+   818  0000D8  6E1B               	movwf	Find_Button_Press@Button_Count,c
+   819                           
+   820                           ;Buttons_Debounce.c: 41: Temp_Press.Full=PORTB;
+   821  0000DA  CF81 F01D          	movff	3969,Find_Button_Press@Temp_Press	;volatile
+   822                           
+   823                           ;Buttons_Debounce.c: 42: }
+   824                           ;Buttons_Debounce.c: 43: break;
+   825  0000DE  0012               	return	
+   826  0000E0                     i2l764:
+   827                           
+   828                           ;Buttons_Debounce.c: 45: if (Temp_Press.Full == PORTB)
+   829  0000E0  5081               	movf	3969,w,c	;volatile
+   830  0000E2  181D               	xorwf	Find_Button_Press@Temp_Press,w,c
+   831  0000E4  A4D8               	btfss	status,2,c
+   832  0000E6  D007               	goto	i2l772
+   833                           
+   834                           ;Buttons_Debounce.c: 46: {
+   835                           ;Buttons_Debounce.c: 47: ++Button_Count;
+   836  0000E8  2A1B               	incf	Find_Button_Press@Button_Count,f,c
+   837                           
+   838                           ;Buttons_Debounce.c: 48: if (Button_Count > 10)
+   839  0000EA  0E0A               	movlw	10
+   840  0000EC  641B               	cpfsgt	Find_Button_Press@Button_Count,c
+   841  0000EE  0012               	return	
+   842                           
+   843                           ;Buttons_Debounce.c: 49: {
+   844                           ;Buttons_Debounce.c: 50: Button_State = WaitForRelease;
+   845  0000F0  0E02               	movlw	2
+   846  0000F2  6E1C               	movwf	Find_Button_Press@Button_State,c
+   847                           
+   848                           ;Buttons_Debounce.c: 51: }
+   849                           ;Buttons_Debounce.c: 52: }
+   850  0000F4  0012               	return	
+   851  0000F6                     i2l772:
+   852                           
+   853                           ;Buttons_Debounce.c: 53: else
+   854                           ;Buttons_Debounce.c: 54: {
+   855                           ;Buttons_Debounce.c: 55: Button_State = Waiting;
+   856  0000F6  0E00               	movlw	0
+   857  0000F8  6E1C               	movwf	Find_Button_Press@Button_State,c
+   858                           
+   859                           ;Buttons_Debounce.c: 56: }
+   860                           ;Buttons_Debounce.c: 57: break;
+   861  0000FA  0012               	return	
+   862  0000FC                     i2l774:
+   863                           
+   864                           ;Buttons_Debounce.c: 59: if (!PORTB)
+   865  0000FC  5081               	movf	3969,w,c	;volatile
+   866  0000FE  A4D8               	btfss	status,2,c
+   867  000100  0012               	return	
+   868                           
+   869                           ;Buttons_Debounce.c: 60: {
+   870                           ;Buttons_Debounce.c: 61: Button_State = Update;
+   871  000102  0E03               	movlw	3
+   872  000104  6E1C               	movwf	Find_Button_Press@Button_State,c
+   873                           
+   874                           ;Buttons_Debounce.c: 62: }
+   875                           ;Buttons_Debounce.c: 63: break;
+   876  000106  0012               	return	
+   877  000108                     i2l80:
+   878                           
+   879                           ;Buttons_Debounce.c: 65: {
+   880                           ;Buttons_Debounce.c: 66: Button_Press = Temp_Press;
+   881  000108  C01D  F01E         	movff	Find_Button_Press@Temp_Press,_Button_Press
+   882                           
+   883                           ;Buttons_Debounce.c: 67: Button_State = Waiting;
+   884  00010C  0E00               	movlw	0
+   885  00010E  6E1C               	movwf	Find_Button_Press@Button_State,c
+   886                           
+   887                           ;Buttons_Debounce.c: 68: Button_Count = 0;
+   888  000110  0E00               	movlw	0
+   889  000112  6E1B               	movwf	Find_Button_Press@Button_Count,c
+   890                           
+   891                           ;Buttons_Debounce.c: 69: Temp_Press.Full=0;
+   892  000114  0E00               	movlw	0
+   893  000116  6E1D               	movwf	Find_Button_Press@Temp_Press,c
+   894                           
+   895                           ;Buttons_Debounce.c: 70: }
+   896                           ;Buttons_Debounce.c: 71: break;
+   897  000118  0012               	return	
+   898  00011A                     i2l780:
+   899                           
+   900                           ;Buttons_Debounce.c: 73: {
+   901                           ;Buttons_Debounce.c: 74: Button_State = Waiting;
+   902  00011A  0E00               	movlw	0
+   903  00011C  6E1C               	movwf	Find_Button_Press@Button_State,c
+   904                           
+   905                           ;Buttons_Debounce.c: 75: Button_Count = 0;
+   906  00011E  0E00               	movlw	0
+   907  000120  6E1B               	movwf	Find_Button_Press@Button_Count,c
+   908                           
+   909                           ;Buttons_Debounce.c: 76: Temp_Press.Full=0;
+   910  000122  0E00               	movlw	0
+   911  000124  6E1D               	movwf	Find_Button_Press@Temp_Press,c
+   912                           
+   913                           ;Buttons_Debounce.c: 77: Button_Press.Full=0;
+   914  000126  0E00               	movlw	0
+   915  000128  6E1E               	movwf	_Button_Press,c
+   916                           
+   917                           ;Buttons_Debounce.c: 78: }
+   918                           ;Buttons_Debounce.c: 79: }
+   919  00012A  0012               	return	
+   920  00012C                     i2l782:
+   921  00012C  501C               	movf	Find_Button_Press@Button_State,w,c
+   922                           
+   923                           ; Switch size 1, requested type "space"
+   924                           ; Number of cases is 4, Range of values is 0 to 3
+   925                           ; switch strategies available:
+   926                           ; Name         Instructions Cycles
+   927                           ; simple_byte           13     7 (average)
+   928                           ;	Chosen strategy is simple_byte
+   929  00012E  0A00               	xorlw	0	; case 0
+   930  000130  B4D8               	btfsc	status,2,c
+   931  000132  D7CC               	goto	i2l758
+   932  000134  0A01               	xorlw	1	; case 1
+   933  000136  B4D8               	btfsc	status,2,c
+   934  000138  D7D3               	goto	i2l764
+   935  00013A  0A03               	xorlw	3	; case 2
+   936  00013C  B4D8               	btfsc	status,2,c
+   937  00013E  D7DE               	goto	i2l774
+   938  000140  0A01               	xorlw	1	; case 3
+   939  000142  B4D8               	btfsc	status,2,c
+   940  000144  D7E1               	goto	i2l80
+   941  000146  D7E9               	goto	i2l780
+   942  000148                     __end_of_Find_Button_Press:
+   943                           	opt stack 0
+   944  0000                     pclatu	equ	0xFFB
+   945                           pclath	equ	0xFFA
+   946                           tblptru	equ	0xFF8
+   947                           tblptrh	equ	0xFF7
+   948                           tblptrl	equ	0xFF6
+   949                           tablat	equ	0xFF5
+   950                           prodh	equ	0xFF4
+   951                           prodl	equ	0xFF3
+   952                           intcon	equ	0xFF2
+   953                           fsr0h	equ	0xFEA
+   954                           fsr0l	equ	0xFE9
+   955                           wreg	equ	0xFE8
+   956                           fsr1h	equ	0xFE2
+   957                           fsr1l	equ	0xFE1
+   958                           fsr2h	equ	0xFDA
+   959                           fsr2l	equ	0xFD9
+   960                           status	equ	0xFD8
+   961                           pclatu	equ	0xFFB
+   962                           pclath	equ	0xFFA
+   963                           tblptru	equ	0xFF8
+   964                           tblptrh	equ	0xFF7
+   965                           tblptrl	equ	0xFF6
+   966                           tablat	equ	0xFF5
+   967                           prodh	equ	0xFF4
+   968                           prodl	equ	0xFF3
+   969                           intcon	equ	0xFF2
+   970                           fsr0h	equ	0xFEA
+   971                           fsr0l	equ	0xFE9
+   972                           wreg	equ	0xFE8
+   973                           fsr1h	equ	0xFE2
+   974                           fsr1l	equ	0xFE1
+   975                           fsr2h	equ	0xFDA
+   976                           fsr2l	equ	0xFD9
+   977                           status	equ	0xFD8
+   978                           
+   979                           	psect	rparam
+   980  0000                     pclatu	equ	0xFFB
+   981                           pclath	equ	0xFFA
+   982                           tblptru	equ	0xFF8
+   983                           tblptrh	equ	0xFF7
+   984                           tblptrl	equ	0xFF6
+   985                           tablat	equ	0xFF5
+   986                           prodh	equ	0xFF4
+   987                           prodl	equ	0xFF3
+   988                           intcon	equ	0xFF2
+   989                           fsr0h	equ	0xFEA
+   990                           fsr0l	equ	0xFE9
+   991                           wreg	equ	0xFE8
+   992                           fsr1h	equ	0xFE2
+   993                           fsr1l	equ	0xFE1
+   994                           fsr2h	equ	0xFDA
+   995                           fsr2l	equ	0xFD9
+   996                           status	equ	0xFD8
+   997                           
+   998                           	psect	temp
+   999  000020                     btemp:
+  1000                           	opt stack 0
+  1001  000020                     	ds	1
+  1002  0000                     int$flags	set	btemp
+  1003                           pclatu	equ	0xFFB
+  1004                           pclath	equ	0xFFA
+  1005                           tblptru	equ	0xFF8
+  1006                           tblptrh	equ	0xFF7
+  1007                           tblptrl	equ	0xFF6
+  1008                           tablat	equ	0xFF5
+  1009                           prodh	equ	0xFF4
+  1010                           prodl	equ	0xFF3
+  1011                           intcon	equ	0xFF2
+  1012                           fsr0h	equ	0xFEA
+  1013                           fsr0l	equ	0xFE9
+  1014                           wreg	equ	0xFE8
+  1015                           fsr1h	equ	0xFE2
+  1016                           fsr1l	equ	0xFE1
+  1017                           fsr2h	equ	0xFDA
+  1018                           fsr2l	equ	0xFD9
+  1019                           status	equ	0xFD8
+
+
+Data Sizes:
+    Strings     0
+    Constant    0
+    Data        0
+    BSS         5
+    Persistent  0
+    Stack       0
+
+Auto Spaces:
+    Space          Size  Autos    Used
+    COMRAM          126     26      31
+    BANK0           128      0       0
+    BANK1           256      0       0
+    BANK2           256      0       0
+    BANK3           256      0       0
+    BANK4           256      0       0
+    BANK5           256      0       0
+
+Pointer List with Targets:
+
+    None.
+
+Critical Paths under _main in COMRAM
+
+    _main->_Initial
+    _Initial->_WriteTimer0
+    _Initial->_delay_s
+
+Critical Paths under _myIsr in COMRAM
+
+    _myIsr->i2_WriteTimer0
+
+Critical Paths under _main in BANK0
+
+    None.
+
+Critical Paths under _myIsr in BANK0
+
+    None.
+
+Critical Paths under _main in BANK1
+
+    None.
+
+Critical Paths under _myIsr in BANK1
+
+    None.
+
+Critical Paths under _main in BANK2
+
+    None.
+
+Critical Paths under _myIsr in BANK2
+
+    None.
+
+Critical Paths under _main in BANK3
+
+    None.
+
+Critical Paths under _myIsr in BANK3
+
+    None.
+
+Critical Paths under _main in BANK4
+
+    None.
+
+Critical Paths under _myIsr in BANK4
+
+    None.
+
+Critical Paths under _main in BANK5
+
+    None.
+
+Critical Paths under _myIsr in BANK5
+
+    None.
+
+Call Graph Tables:
+
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (0) _main                                                 0     0      0     331
+                            _Initial
+ ---------------------------------------------------------------------------------
+ (1) _Initial                                              3     3      0     331
+                                             23 COMRAM     3     3      0
+                         _OpenTimer0
+                        _WriteTimer0
+                            _delay_s
+ ---------------------------------------------------------------------------------
+ (2) _delay_s                                              4     4      0      60
+                                             19 COMRAM     4     4      0
+ ---------------------------------------------------------------------------------
+ (2) _WriteTimer0                                          4     2      2     195
+                                             19 COMRAM     4     2      2
+ ---------------------------------------------------------------------------------
+ (2) _OpenTimer0                                           1     1      0      30
+                                             19 COMRAM     1     1      0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 2
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (3) _myIsr                                               15    15      0      93
+                                              4 COMRAM    15    15      0
+                  _Find_Button_Press
+                      i2_WriteTimer0
+ ---------------------------------------------------------------------------------
+ (4) i2_WriteTimer0                                        4     2      2      93
+                                              0 COMRAM     4     2      2
+ ---------------------------------------------------------------------------------
+ (4) _Find_Button_Press                                    0     0      0       0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 4
+ ---------------------------------------------------------------------------------
+
+ Call Graph Graphs:
+
+ _main (ROOT)
+   _Initial
+     _OpenTimer0
+     _WriteTimer0
+     _delay_s
+
+ _myIsr (ROOT)
+   _Find_Button_Press
+   i2_WriteTimer0
+
+ Address spaces:
+Name               Size   Autos  Total    Cost      Usage
+BIGRAM             5FF      0       0      17        0.0%
+EEDATA             100      0       0       0        0.0%
+BITBANK5           100      0       0      16        0.0%
+BANK5              100      0       0      14        0.0%
+BITBANK4           100      0       0      12        0.0%
+BANK4              100      0       0      13        0.0%
+BITBANK3           100      0       0      10        0.0%
+BANK3              100      0       0      11        0.0%
+BITBANK2           100      0       0       8        0.0%
+BANK2              100      0       0       9        0.0%
+BITBANK1           100      0       0       6        0.0%
+BANK1              100      0       0       7        0.0%
+BITBANK0            80      0       0       4        0.0%
+BANK0               80      0       0       5        0.0%
+BITCOMRAM           7E      0       0       0        0.0%
+COMRAM              7E     1A      1F       1       24.6%
+BITSFR               0      0       0      40        0.0%
+SFR                  0      0       0      40        0.0%
+STACK                0      0       0       2        0.0%
+NULL                 0      0       0       0        0.0%
+ABS                  0      0      1F      15        0.0%
+DATA                 0      0      1F       3        0.0%
+CODE                 0      0       0       0        0.0%
+
+
+Microchip Technology PIC18 Macro Assembler V1.35 build -356382666 
+Symbol Table                                                                                   Fri Jan 13 09:31:01 2017
+
+                           l48 0196                             l95 020C                             l96 020E  
+                  __CFG_BORV$3 000000                   __CFG_CP0$OFF 000000                   __CFG_CP1$OFF 000000  
+                 __CFG_CP2$OFF 000000                   __CFG_CP3$OFF 000000                    __CFG_OSC$HS 000000  
+                          l730 01C6                            l740 01E6                            l732 01CA  
+                          l742 01E8                            l736 01D2                            l904 021A  
+                          l860 0170                   __CFG_CPB$OFF 000000                   __CFG_CPD$OFF 000000  
+                          u277 0186                            u287 01D8           __size_of_WriteTimer0 0012  
+                          wreg 000FE8                   __CFG_LVP$OFF 000000                   __CFG_WDT$OFF 000000  
+                         _LATC 000F8B                           i2l35 008E                           i2l80 0108  
+                         _main 0212                           fsr0h 000FEA                           fsr1h 000FE2  
+                         fsr0l 000FE9                           fsr2h 000FDA                           fsr1l 000FE1  
+                         fsr2l 000FD9                           btemp 0020         __size_ofi2_WriteTimer0 0012  
+                         pclat 000FFA                           prodh 000FF4                           prodl 000FF3  
+                         start 0016                  __CFG_IESO$OFF 000000                  __CFG_MCLRE$ON 000000  
+                 ___param_bank 000010                __end_of_Initial 01BE                          ?_main 0001  
+                        _T0CON 000FD5                          i2l780 011A                          i2l772 00F6  
+                        i2l764 00E0                          i2l774 00FC                          i2l758 00CC  
+                        i2l782 012C                          _TMR0H 000FD7                          _TMR0L 000FD6  
+                        _PORTB 000F81                          _TRISB 000F93                          _TRISC 000F94  
+                __CFG_PWRT$OFF 000000                __end_of_delay_s 01F2                  __CFG_WRT0$OFF 000000  
+                __CFG_WRT1$OFF 000000                  __CFG_WRT2$OFF 000000                  __CFG_WRT3$OFF 000000  
+               __CFG_EBTR0$OFF 000000                 __CFG_FCMEN$OFF 000000                 __CFG_EBTR1$OFF 000000  
+               __CFG_EBTR2$OFF 000000                 __CFG_EBTR3$OFF 000000                  __CFG_WRTB$OFF 000000  
+                __CFG_WRTC$OFF 000000                  __CFG_WRTD$OFF 000000                 __CFG_EBTRB$OFF 000000  
+                        _myIsr 0008                          tablat 000FF5                          status 000FD8  
+              __initialization 022E                   __end_of_main 022E                         ??_main 001B  
+                i2_WriteTimer0 0258                  __activetblptr 000002                         _ADCON1 000FC1  
+                       ?_myIsr 0001                     _OpenTimer0 01F2                      ??_Initial 0018  
+               __CFG_XINST$OFF 000000                 __CFG_STVREN$ON 000000               OpenTimer0@config 0014  
+                    ??_delay_s 0014                 ?i2_WriteTimer0 0001                         tblptrh 000FF7  
+                       tblptrl 000FF6                         tblptru 000FF8                     __accesstop 0080  
+      __end_of__initialization 0238                __CFG_PBADEN$OFF 000000                  ___rparam_used 000001  
+               __pcstackCOMRAM 0001                  __end_of_myIsr 00CA                        ??_myIsr 0005  
+                  ?_OpenTimer0 0001                ??i2_WriteTimer0 0003               WriteTimer0@timer 0016  
+                ??_WriteTimer0 0016                        i2u23_40 0076                        i2u23_46 0078  
+          i2WriteTimer0@timer0 0001                        _Initial 0148                     _count_test 001F  
+                      __Hparam 0000                        __Lparam 0000    Find_Button_Press@Temp_Press 001D  
+                      __pcinit 022E                        _delay_s 01BE                        __ramtop 0600  
+          __size_of_OpenTimer0 0020                        __ptext0 0212                        __ptext1 0148  
+                      __ptext2 01BE                        __ptext3 0246                        __ptext4 01F2  
+                      __ptext6 0258                        __ptext7 00CA                      _T0CONbits 000FD5  
+          __end_of_WriteTimer0 0258                 __pintcode_body 001A           end_of_initialization 0238  
+                __Lmediumconst 0000                        int_func 001A              _Find_Button_Press 00CA  
+           ?_Find_Button_Press 0001            ??_Find_Button_Press 0001                      _PORTCbits 000F82  
+    __end_of_Find_Button_Press 0148                    _WriteTimer0 0246            start_initialization 022E  
+                 _Button_Press 001E                   ??_OpenTimer0 0014               __CFG_LPT1OSC$OFF 000000  
+           __end_of_OpenTimer0 0212                    __pbssCOMRAM 001B     __size_of_Find_Button_Press 007E  
+                     ?_Initial 0001              __CFG_CCP2MX$PORTC 000000                      __pintcode 0008  
+                     ?_delay_s 0001          __end_ofi2_WriteTimer0 026A              WriteTimer0@timer0 0014  
+           i2WriteTimer0@timer 0003                 __size_of_myIsr 00C2               __CFG_WDTPS$32768 000000  
+                     Initial@i 0019                       __Hrparam 0000               __size_of_Initial 0076  
+                     __Lrparam 0000             __CFG_BOREN$SBORDIS 000000                   ?_WriteTimer0 0014  
+             __size_of_delay_s 0034                  __size_of_main 001C                       delay_s@i 0017  
+                     delay_s@j 0016                       int$flags 0020                    delay_s@secs 0015  
+                   _INTCONbits 000FF2                       intlevel2 0000  Find_Button_Press@Button_Count 001B  
+Find_Button_Press@Button_State 001C  
