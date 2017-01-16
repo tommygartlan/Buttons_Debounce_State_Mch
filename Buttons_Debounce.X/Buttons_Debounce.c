@@ -27,7 +27,10 @@ Date last modified:- Jan 2017
 typedef enum {Waiting, Detected, WaitForRelease,Update} states;
 
 
-extern Bit_Mask Button_Press;   //must be declared in Application
+extern Bit_Mask Button_Press;   //extern means this is declared externally in
+                                //another file of the project, the Application
+                                //in this case. It's a way of sharing variables
+                                //between files
 
 
 void Find_Button_Press(void)
@@ -40,40 +43,40 @@ void Find_Button_Press(void)
 
 	switch (Button_State){
 		case(Waiting):
-			if(Button_PORT)   //if button detected
+			if(Button_PORT)   //if any button detected
 			{
-				Button_State = Detected;
-				Button_Count = 0;					//zero the count
-			
-				Temp_Press.Full=Button_PORT;  //record the value
+				Button_State = Detected;        //change state
+				Button_Count = 0;		       //OnEntry/zero the count
+	
+				Temp_Press.Full=Button_PORT;  //OnEntry/record the value
 			}
 			break;
 		case(Detected):
 			if (Temp_Press.Full == Button_PORT)
 			{
-				++Button_Count;
+				++Button_Count;    //Guarded state action, if same value increase button count
 				if (Button_Count > MIN_BUTTON_COUNT)
 				{
-					Button_State = WaitForRelease;
+					Button_State = WaitForRelease;   //guarded state transition
 				}
 			}
 			else
 			{
-				Button_State = Waiting;
+				Button_State = Waiting;   //state transition
 			}
 			break;
 		case(WaitForRelease):
 			if (!Button_PORT)
 			{
-				Button_State = Update;
+				Button_State = Update;   //state transition when all buttons released
 			}
 			break;
 		case(Update):
 			{
-				Button_Press = Temp_Press;
-				Button_State = Waiting;
-				Button_Count = 0;
-				Temp_Press.Full=0;
+				Button_Press = Temp_Press;  //state action
+				Button_State = Waiting;     //state transition
+				Button_Count = 0;           //state action
+				Temp_Press.Full=0;          //state action
 			}
 			break;
 		default:
