@@ -8,7 +8,9 @@ Program Description:- Simple application to show the use of the button_debounce
  * header and C file, that includes a state machine to debounce the button.
  * Button_Press can be treated in it's entirety as Button_Press.Full
  * or individual button as in Button_Press.B0
- * Note the state machine sets the corresponding Button bit to 1 if a button is
+ * LEDS connected to PORTC
+ * Buttons connected to PORTB
+ * Note the state machine toggles the corresponding LED if a button is
  * pressed. It will only be set to 1 after debouncing. The application clears the 
  * value after use.
  * The state machine needs to be continuously called. In this case every 10mS
@@ -25,7 +27,7 @@ Program Description:- Simple application to show the use of the button_debounce
 #include <plib/timers.h>
 #include "Buttons_Debounce.h"
 
-Bit_Mask Button_Press;
+Button_Type Button_Press;         //Create the Button variable
 
 /************************************************
 			Function Prototypes
@@ -45,7 +47,8 @@ void __interrupt myIsr(void)
     // only process timer-triggered interrupts
     if(INTCONbits.TMR0IE && INTCONbits.TMR0IF) {
         
-        Find_Button_Press();       //check the buttons every 10mS
+        Find_Button_Press();       //NOTE.....I evaluate the debounce state machine every 10mS, i.e check the buttons every 10mS
+        
         WriteTimer0(40960); 
         INTCONbits.TMR0IF = 0;  // clear this interrupt condition
         
@@ -62,28 +65,29 @@ void __interrupt myIsr(void)
 void main(void)
 {
 	Button_Press.Full = 0x00;
-	//Temp_Press.Full = 0x00;
+	
     Initial();
 
 	while(1)
 	{
-		//Find_Button_Press();
-        //NOTE:-  The structure is really like logging a legitimate button press
-        //as oppose to showing the state of the button. That's why we clear the event
-        //when it is processed.
  		if(Got_Button_E)   //if some button has been pressed
 		{
 			if(Button_Press.B0)  //if its button 0
-				PORTCbits.RC0 = 1;
+				PORTCbits.RC0 = ~PORTCbits.RC0;
             
             if  (Button_Press.B1)  //if its button 0
-				PORTCbits.RC0 = 0;     
+				PORTCbits.RC1 = ~PORTCbits.RC1;   
+            
+            if  (Button_Press.B2)  //if its button 0
+				PORTCbits.RC2 = ~PORTCbits.RC2;    
+            
+            if  (Button_Press.B3)  //if its button 0
+				PORTCbits.RC3 = ~PORTCbits.RC3;  
             
             //Clear the button press event
 			Button_Press.Full=0x00;   //clear all button events since only one can happen at time.
 		}
 		
-		//__delay_ms(10); //how often the buttons are checked
 		
 	}
 }
@@ -93,13 +97,14 @@ void Initial(void){
     ADCON1 = 0x0F;
 	TRISB = 0xFF; //Buttons
 	TRISC = 0x00;   //LEDS
-
+    
+    //Test the LEDS
 	LATC = 0x00;
 	delay_s(1);
 	LATC = 0xff;
 	delay_s(1);
 	LATC = 0x00;
-    
+    //test the switches
 	for(unsigned int i =0; i<1000;i++)
 	{
 		LATC = PORTB;  //test switches here

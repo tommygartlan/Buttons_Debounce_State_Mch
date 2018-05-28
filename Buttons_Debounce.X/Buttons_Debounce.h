@@ -23,7 +23,13 @@ typedef union{
         unsigned char B7 :1;
     };
     
-}Bit_Mask;
+}Button_Type;
 
-                     // test ? True:False)
 #define Got_Button_E (Button_Press.Full !=0 ? 1:0)
+
+#define Button_PORT PORTB
+
+#define MIN_BUTTON_COUNT 10
+
+extern Button_Type Button_Press; 
+                             

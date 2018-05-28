@@ -1,6 +1,6 @@
 /***************************************************
 Name:- Tommy Gartlan
-Date last modified:- Jan 2017
+Date last modified:- MAy 2018
 
  * Functions for Debouncing Button Block
  * The C file for the DEbounce button library
@@ -19,36 +19,24 @@ Date last modified:- Jan 2017
 #include <xc.h>
 #include "Buttons_Debounce.h"
 
-#define Button_PORT PORTB
-
-#define MIN_BUTTON_COUNT 10
 
 
 typedef enum {Waiting, Detected, WaitForRelease,Update} states;
-
-
-extern Bit_Mask Button_Press;   //extern means this is declared externally in
-                                //another file of the project, the Application
-                                //in this case. It's a way of sharing variables
-                                //between files
-
-
+//Function called every by timed interrupt in application file (every 10mS for example)
 void Find_Button_Press(void)
 {
 	static states Button_State=Waiting;
 	static unsigned char Button_Count=0;
-    static Bit_Mask Temp_Press;
+    static Button_Type Temp_Press;      //stores temporary button values
     
-	
-
 	switch (Button_State){
 		case(Waiting):
-			if(Button_PORT)   //if any button detected
+			if(Button_PORT)   //if any button press detected
 			{
 				Button_State = Detected;        //change state
 				Button_Count = 0;		       //OnEntry/zero the count
 	
-				Temp_Press.Full=Button_PORT;  //OnEntry/record the value
+				Temp_Press.Full=Button_PORT;  //OnEntry/record the temporary value
 			}
 			break;
 		case(Detected):
@@ -73,7 +61,7 @@ void Find_Button_Press(void)
 			break;
 		case(Update):
 			{
-				Button_Press = Temp_Press;  //state action
+				Button_Press = Temp_Press;  //state action         HERE the BUTTON value is updated
 				Button_State = Waiting;     //state transition
 				Button_Count = 0;           //state action
 				Temp_Press.Full=0;          //state action
