@@ -4,19 +4,19 @@
 [d chip 18F4520 ]
 [d frameptr 4065 ]
 "28 J:\myusb\ES_proj\MPlabx_16\Buttons_Debounce_State_Mch\Buttons_Debounce.X\Buttons_Debounce.c
-[e E4114 . `uc
+[e E4115 . `uc
 Waiting 0
 Detected 1
 WaitForRelease 2
 Update 3
 ]
-"42 J:\myusb\ES_proj\MPlabx_16\Buttons_Debounce_State_Mch\Buttons_Debounce.X\Button_app_1.c
+"44 J:\myusb\ES_proj\MPlabx_16\Buttons_Debounce_State_Mch\Buttons_Debounce.X\Button_app_1.c
 [v _myIsr myIsr `II(v  1 e 0 0 ]
-"62
+"65
 [v _main main `(v  1 e 0 0 ]
-"91
+"95
 [v _Initial Initial `(v  1 e 0 0 ]
-"121
+"126
 [v _delay_s delay_s `(v  1 e 0 0 ]
 "26 J:\myusb\ES_proj\MPlabx_16\Buttons_Debounce_State_Mch\Buttons_Debounce.X\Buttons_Debounce.c
 [v _Find_Button_Press Find_Button_Press `(v  1 e 0 0 ]
@@ -54,10 +54,10 @@ Update 3
 `uc 1 B6 1 0 :1:6 
 `uc 1 B7 1 0 :1:7 
 ]
-"28 J:\myusb\ES_proj\MPlabx_16\Buttons_Debounce_State_Mch\Buttons_Debounce.X\Button_app_1.c
+"30 J:\myusb\ES_proj\MPlabx_16\Buttons_Debounce_State_Mch\Buttons_Debounce.X\Button_app_1.c
 [u S30 . 1 `uc 1 Full 1 0 `S21 1 . 1 0 ]
 [v _Button_Press Button_Press `S30  1 e 1 0 ]
-"41
+"43
 [v _count_test count_test `uc  1 e 1 0 ]
 "269 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic18f4520.h
 [v _PORTB PORTB `VEuc  1 e 1 @3969 ]
@@ -175,30 +175,30 @@ Update 3
 ]
 [u S73 . 1 `S33 1 . 1 0 `S42 1 . 1 0 `S51 1 . 1 0 `S60 1 . 1 0 `S69 1 . 1 0 ]
 [v _INTCONbits INTCONbits `VES73  1 e 1 @4082 ]
-"62 J:\myusb\ES_proj\MPlabx_16\Buttons_Debounce_State_Mch\Buttons_Debounce.X\Button_app_1.c
+"65 J:\myusb\ES_proj\MPlabx_16\Buttons_Debounce_State_Mch\Buttons_Debounce.X\Button_app_1.c
 [v _main main `(v  1 e 0 0 ]
 {
-"89
+"93
 } 0
-"91
+"95
 [v _Initial Initial `(v  1 e 0 0 ]
 {
-"103
+"108
 [v Initial@i i `ui  1 a 2 24 ]
-"118
+"123
 } 0
-"121
+"126
 [v _delay_s delay_s `(v  1 e 0 0 ]
 {
 [v delay_s@secs secs `uc  1 a 1 wreg ]
-"123
+"128
 [v delay_s@i i `uc  1 a 1 22 ]
 [v delay_s@j j `uc  1 a 1 21 ]
-"121
+"126
 [v delay_s@secs secs `uc  1 a 1 wreg ]
-"124
+"129
 [v delay_s@secs secs `uc  1 a 1 20 ]
-"130
+"135
 } 0
 "16 C:\Program Files (x86)\Microchip\xc8\v1.35\sources\pic18\plib\Timers\t0write.c
 [v _WriteTimer0 WriteTimer0 `(v  1 e 0 0 ]
@@ -219,10 +219,10 @@ Update 3
 [v OpenTimer0@config config `uc  1 a 1 19 ]
 "31
 } 0
-"42 J:\myusb\ES_proj\MPlabx_16\Buttons_Debounce_State_Mch\Buttons_Debounce.X\Button_app_1.c
+"44 J:\myusb\ES_proj\MPlabx_16\Buttons_Debounce_State_Mch\Buttons_Debounce.X\Button_app_1.c
 [v _myIsr myIsr `II(v  1 e 0 0 ]
 {
-"58
+"61
 } 0
 "16 C:\Program Files (x86)\Microchip\xc8\v1.35\sources\pic18\plib\Timers\t0write.c
 [v i2_WriteTimer0 WriteTimer0 `(v  1 e 0 0 ]
@@ -236,7 +236,7 @@ Update 3
 [v _Find_Button_Press Find_Button_Press `(v  1 e 0 0 ]
 {
 "28
-[v Find_Button_Press@Button_State Button_State `E4114  1 s 1 Button_State ]
+[v Find_Button_Press@Button_State Button_State `E4115  1 s 1 Button_State ]
 "29
 [v Find_Button_Press@Button_Count Button_Count `uc  1 s 1 Button_Count ]
 [s S21 . 1 `uc 1 B0 1 0 :1:0 
@@ -251,5 +251,5 @@ Update 3
 "30
 [u S30 . 1 `uc 1 Full 1 0 `S21 1 . 1 0 ]
 [v Find_Button_Press@Temp_Press Temp_Press `S30  1 s 1 Temp_Press ]
-"80
+"78
 } 0

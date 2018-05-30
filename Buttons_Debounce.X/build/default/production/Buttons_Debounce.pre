@@ -4963,22 +4963,19 @@ unsigned char B6 :1;
 unsigned char B7 :1;
 };
 
-}Bit_Mask;
+}Button_Type;
 
-# 20 "Buttons_Debounce.c"
+# 34
+extern Button_Type Button_Press;
+
+# 24 "Buttons_Debounce.c"
 typedef enum {Waiting, Detected, WaitForRelease,Update} states;
-
-
-extern Bit_Mask Button_Press;
-
 
 void Find_Button_Press(void)
 {
 static states Button_State=Waiting;
 static unsigned char Button_Count=0;
-static Bit_Mask Temp_Press;
-
-
+static Button_Type Temp_Press;
 
 switch (Button_State){
 case(Waiting):

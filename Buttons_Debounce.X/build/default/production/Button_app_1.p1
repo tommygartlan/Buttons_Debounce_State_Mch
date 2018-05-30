@@ -53,7 +53,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "497
 [v _PORTCbits `VS18 ~T0 @X0 0 e@3970 ]
 [p mainexit ]
-"33 Button_app_1.c
+"35 Button_app_1.c
 [v _Initial `(v ~T0 @X0 0 ef ]
 "4962 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic18f4520.h
 [v _ADCON1 `Vuc ~T0 @X0 0 e@4033 ]
@@ -63,7 +63,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _TRISC `Vuc ~T0 @X0 0 e@3988 ]
 "1364
 [v _LATC `Vuc ~T0 @X0 0 e@3979 ]
-"34 Button_app_1.c
+"36 Button_app_1.c
 [v _delay_s `(v ~T0 @X0 0 ef1`uc ]
 "269 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic18f4520.h
 [v _PORTB `Vuc ~T0 @X0 0 e@3969 ]
@@ -3794,255 +3794,270 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;Buttons_Debounce.h: 22: unsigned char B6 :1;
 [; ;Buttons_Debounce.h: 23: unsigned char B7 :1;
 [; ;Buttons_Debounce.h: 24: };
-[; ;Buttons_Debounce.h: 26: }Bit_Mask;
-"28 Button_app_1.c
+[; ;Buttons_Debounce.h: 26: }Button_Type;
+[; ;Buttons_Debounce.h: 34: extern Button_Type Button_Press;
+"30 Button_app_1.c
 [v _Button_Press `S401 ~T0 @X0 1 e ]
-[; ;Button_app_1.c: 28: Bit_Mask Button_Press;
-[; ;Button_app_1.c: 33: void Initial(void);
-[; ;Button_app_1.c: 34: void delay_s(unsigned char secs);
-"41
+[; ;Button_app_1.c: 30: Button_Type Button_Press;
+[; ;Button_app_1.c: 35: void Initial(void);
+[; ;Button_app_1.c: 36: void delay_s(unsigned char secs);
+"43
 [v _count_test `uc ~T0 @X0 1 e ]
 [i _count_test
 -> -> 0 `i `uc
 ]
-[; ;Button_app_1.c: 41: unsigned char count_test =0;
+[; ;Button_app_1.c: 43: unsigned char count_test =0;
 [v F4122 `(v ~T0 @X0 1 tf ]
-"42
+"44
 [v _myIsr `IF4122 ~T0 @X0 1 e ]
-"43
+"45
 {
-[; ;Button_app_1.c: 42: void __interrupt myIsr(void)
-[; ;Button_app_1.c: 43: {
+[; ;Button_app_1.c: 44: void __interrupt myIsr(void)
+[; ;Button_app_1.c: 45: {
 [e :U _myIsr ]
 [f ]
-[; ;Button_app_1.c: 46: if(INTCONbits.TMR0IE && INTCONbits.TMR0IF) {
-"46
+[; ;Button_app_1.c: 48: if(INTCONbits.TMR0IE && INTCONbits.TMR0IF) {
+"48
 [e $ ! && != -> . . _INTCONbits 0 5 `i -> -> -> 0 `i `Vuc `i != -> . . _INTCONbits 0 2 `i -> -> -> 0 `i `Vuc `i 404  ]
 {
-[; ;Button_app_1.c: 48: Find_Button_Press();
-"48
-[e ( _Find_Button_Press ..  ]
-[; ;Button_app_1.c: 49: WriteTimer0(40960);
-"49
-[e ( _WriteTimer0 (1 -> -> 40960 `l `ui ]
-[; ;Button_app_1.c: 50: INTCONbits.TMR0IF = 0;
+[; ;Button_app_1.c: 50: Find_Button_Press();
 "50
-[e = . . _INTCONbits 0 2 -> -> 0 `i `uc ]
-[; ;Button_app_1.c: 52: count_test++;
+[e ( _Find_Button_Press ..  ]
+[; ;Button_app_1.c: 52: WriteTimer0(40960);
 "52
-[e ++ _count_test -> -> 1 `i `uc ]
-[; ;Button_app_1.c: 53: if(count_test == 100){
+[e ( _WriteTimer0 (1 -> -> 40960 `l `ui ]
+[; ;Button_app_1.c: 53: INTCONbits.TMR0IF = 0;
 "53
+[e = . . _INTCONbits 0 2 -> -> 0 `i `uc ]
+[; ;Button_app_1.c: 55: count_test++;
+"55
+[e ++ _count_test -> -> 1 `i `uc ]
+[; ;Button_app_1.c: 56: if(count_test == 100){
+"56
 [e $ ! == -> _count_test `i -> 100 `i 405  ]
 {
-[; ;Button_app_1.c: 54: PORTCbits.RC7 = ~PORTCbits.RC7;
-"54
+[; ;Button_app_1.c: 57: PORTCbits.RC7 = ~PORTCbits.RC7;
+"57
 [e = . . _PORTCbits 0 7 -> ~ -> . . _PORTCbits 0 7 `i `uc ]
-[; ;Button_app_1.c: 55: count_test = 0;
-"55
+[; ;Button_app_1.c: 58: count_test = 0;
+"58
 [e = _count_test -> -> 0 `i `uc ]
-"56
+"59
 }
 [e :U 405 ]
-"57
+"60
 }
 [e :U 404 ]
-[; ;Button_app_1.c: 56: }
-[; ;Button_app_1.c: 57: }
-[; ;Button_app_1.c: 58: }
-"58
+[; ;Button_app_1.c: 59: }
+[; ;Button_app_1.c: 60: }
+[; ;Button_app_1.c: 61: }
+"61
 [e :UE 403 ]
 }
-"62
+"65
 [v _main `(v ~T0 @X0 1 ef ]
-"63
+"66
 {
-[; ;Button_app_1.c: 62: void main(void)
-[; ;Button_app_1.c: 63: {
+[; ;Button_app_1.c: 65: void main(void)
+[; ;Button_app_1.c: 66: {
 [e :U _main ]
 [f ]
-[; ;Button_app_1.c: 64: Button_Press.Full = 0x00;
-"64
+[; ;Button_app_1.c: 67: Button_Press.Full = 0x00;
+"67
 [e = . _Button_Press 0 -> -> 0 `i `uc ]
-[; ;Button_app_1.c: 66: Initial();
-"66
-[e ( _Initial ..  ]
-[; ;Button_app_1.c: 68: while(1)
-"68
-[e :U 408 ]
-[; ;Button_app_1.c: 69: {
+[; ;Button_app_1.c: 69: Initial();
 "69
+[e ( _Initial ..  ]
+[; ;Button_app_1.c: 71: while(1)
+"71
+[e :U 408 ]
+[; ;Button_app_1.c: 72: {
+"72
 {
-[; ;Button_app_1.c: 74: if((Button_Press.Full !=0 ? 1:0))
-"74
+[; ;Button_app_1.c: 73: if((Button_Press.Full !=0 ? 1:0))
+"73
 [e $ ! != ? != -> . _Button_Press 0 `i -> 0 `i : -> 1 `i -> 0 `i -> 0 `i 410  ]
-[; ;Button_app_1.c: 75: {
-"75
+[; ;Button_app_1.c: 74: {
+"74
 {
-[; ;Button_app_1.c: 76: if(Button_Press.B0)
-"76
+[; ;Button_app_1.c: 75: if(Button_Press.B0)
+"75
 [e $ ! != -> . . _Button_Press 1 0 `i -> -> -> 0 `i `uc `i 411  ]
-[; ;Button_app_1.c: 77: PORTCbits.RC0 = 1;
-"77
-[e = . . _PORTCbits 0 0 -> -> 1 `i `uc ]
+[; ;Button_app_1.c: 76: PORTCbits.RC0 = ~PORTCbits.RC0;
+"76
+[e = . . _PORTCbits 0 0 -> ~ -> . . _PORTCbits 0 0 `i `uc ]
 [e :U 411 ]
-[; ;Button_app_1.c: 79: if (Button_Press.B1)
-"79
+[; ;Button_app_1.c: 78: if (Button_Press.B1)
+"78
 [e $ ! != -> . . _Button_Press 1 1 `i -> -> -> 0 `i `uc `i 412  ]
-[; ;Button_app_1.c: 80: PORTCbits.RC0 = 0;
-"80
-[e = . . _PORTCbits 0 0 -> -> 0 `i `uc ]
+[; ;Button_app_1.c: 79: PORTCbits.RC1 = ~PORTCbits.RC1;
+"79
+[e = . . _PORTCbits 0 1 -> ~ -> . . _PORTCbits 0 1 `i `uc ]
 [e :U 412 ]
-[; ;Button_app_1.c: 83: Button_Press.Full=0x00;
-"83
-[e = . _Button_Press 0 -> -> 0 `i `uc ]
+[; ;Button_app_1.c: 81: if (Button_Press.B2)
+"81
+[e $ ! != -> . . _Button_Press 1 2 `i -> -> -> 0 `i `uc `i 413  ]
+[; ;Button_app_1.c: 82: PORTCbits.RC2 = ~PORTCbits.RC2;
+"82
+[e = . . _PORTCbits 0 2 -> ~ -> . . _PORTCbits 0 2 `i `uc ]
+[e :U 413 ]
+[; ;Button_app_1.c: 84: if (Button_Press.B3)
 "84
+[e $ ! != -> . . _Button_Press 1 3 `i -> -> -> 0 `i `uc `i 414  ]
+[; ;Button_app_1.c: 85: PORTCbits.RC3 = ~PORTCbits.RC3;
+"85
+[e = . . _PORTCbits 0 3 -> ~ -> . . _PORTCbits 0 3 `i `uc ]
+[e :U 414 ]
+[; ;Button_app_1.c: 88: Button_Press.Full=0x00;
+"88
+[e = . _Button_Press 0 -> -> 0 `i `uc ]
+"89
 }
 [e :U 410 ]
-"88
+"92
 }
 [e :U 407 ]
-"68
+"71
 [e $U 408  ]
 [e :U 409 ]
-[; ;Button_app_1.c: 84: }
-[; ;Button_app_1.c: 88: }
 [; ;Button_app_1.c: 89: }
-"89
+[; ;Button_app_1.c: 92: }
+[; ;Button_app_1.c: 93: }
+"93
 [e :UE 406 ]
 }
-"91
+"95
 [v _Initial `(v ~T0 @X0 1 ef ]
 {
-[; ;Button_app_1.c: 91: void Initial(void){
+[; ;Button_app_1.c: 95: void Initial(void){
 [e :U _Initial ]
 [f ]
-[; ;Button_app_1.c: 93: ADCON1 = 0x0F;
-"93
-[e = _ADCON1 -> -> 15 `i `uc ]
-[; ;Button_app_1.c: 94: TRISB = 0xFF;
-"94
-[e = _TRISB -> -> 255 `i `uc ]
-[; ;Button_app_1.c: 95: TRISC = 0x00;
-"95
-[e = _TRISC -> -> 0 `i `uc ]
-[; ;Button_app_1.c: 97: LATC = 0x00;
+[; ;Button_app_1.c: 97: ADCON1 = 0x0F;
 "97
-[e = _LATC -> -> 0 `i `uc ]
-[; ;Button_app_1.c: 98: delay_s(1);
+[e = _ADCON1 -> -> 15 `i `uc ]
+[; ;Button_app_1.c: 98: TRISB = 0xFF;
 "98
-[e ( _delay_s (1 -> -> 1 `i `uc ]
-[; ;Button_app_1.c: 99: LATC = 0xff;
+[e = _TRISB -> -> 255 `i `uc ]
+[; ;Button_app_1.c: 99: TRISC = 0x00;
 "99
-[e = _LATC -> -> 255 `i `uc ]
-[; ;Button_app_1.c: 100: delay_s(1);
-"100
-[e ( _delay_s (1 -> -> 1 `i `uc ]
-[; ;Button_app_1.c: 101: LATC = 0x00;
-"101
+[e = _TRISC -> -> 0 `i `uc ]
+[; ;Button_app_1.c: 102: LATC = 0x00;
+"102
 [e = _LATC -> -> 0 `i `uc ]
-[; ;Button_app_1.c: 103: for(unsigned int i =0; i<1000;i++)
+[; ;Button_app_1.c: 103: delay_s(1);
 "103
+[e ( _delay_s (1 -> -> 1 `i `uc ]
+[; ;Button_app_1.c: 104: LATC = 0xff;
+"104
+[e = _LATC -> -> 255 `i `uc ]
+[; ;Button_app_1.c: 105: delay_s(1);
+"105
+[e ( _delay_s (1 -> -> 1 `i `uc ]
+[; ;Button_app_1.c: 106: LATC = 0x00;
+"106
+[e = _LATC -> -> 0 `i `uc ]
+[; ;Button_app_1.c: 108: for(unsigned int i =0; i<1000;i++)
+"108
 {
 [v _i `ui ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `ui ]
-[e $ < _i -> -> 1000 `i `ui 414  ]
-[e $U 415  ]
-"104
-[e :U 414 ]
-[; ;Button_app_1.c: 104: {
-{
-[; ;Button_app_1.c: 105: LATC = PORTB;
-"105
-[e = _LATC _PORTB ]
-[; ;Button_app_1.c: 106: _delay((unsigned long)((10)*(19660800/4000.0)));
-"106
-[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 19660800 `l `d .4000.0 `ul ]
-"107
-}
-"103
-[e ++ _i -> -> 1 `i `ui ]
-[e $ < _i -> -> 1000 `i `ui 414  ]
-[e :U 415 ]
-"107
-}
-[; ;Button_app_1.c: 107: }
-[; ;Button_app_1.c: 109: LATC = 0xff;
+[e $ < _i -> -> 1000 `i `ui 416  ]
+[e $U 417  ]
 "109
-[e = _LATC -> -> 255 `i `uc ]
-[; ;Button_app_1.c: 110: delay_s(1);
-"110
-[e ( _delay_s (1 -> -> 1 `i `uc ]
-[; ;Button_app_1.c: 111: LATC = 0x00;
-"111
-[e = _LATC -> -> 0 `i `uc ]
-[; ;Button_app_1.c: 112: delay_s(1);
-"112
-[e ( _delay_s (1 -> -> 1 `i `uc ]
-[; ;Button_app_1.c: 114: OpenTimer0( 0b11111111 & 0b10111111 & 0b11011111 & 0b11110000);
-"114
-[e ( _OpenTimer0 (1 -> & & & -> 255 `i -> 191 `i -> 223 `i -> 240 `i `uc ]
-[; ;Button_app_1.c: 115: WriteTimer0(40960);
-"115
-[e ( _WriteTimer0 (1 -> -> 40960 `l `ui ]
-[; ;Button_app_1.c: 116: (INTCONbits.GIE = 1);
-"116
-[e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
-[; ;Button_app_1.c: 118: }
-"118
-[e :UE 413 ]
-}
-"121
-[v _delay_s `(v ~T0 @X0 1 ef1`uc ]
-"122
+[e :U 416 ]
+[; ;Button_app_1.c: 109: {
 {
-[; ;Button_app_1.c: 121: void delay_s(unsigned char secs)
-[; ;Button_app_1.c: 122: {
-[e :U _delay_s ]
+[; ;Button_app_1.c: 110: LATC = PORTB;
+"110
+[e = _LATC _PORTB ]
+[; ;Button_app_1.c: 111: _delay((unsigned long)((10)*(19660800/4000.0)));
+"111
+[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 19660800 `l `d .4000.0 `ul ]
+"112
+}
+"108
+[e ++ _i -> -> 1 `i `ui ]
+[e $ < _i -> -> 1000 `i `ui 416  ]
+[e :U 417 ]
+"112
+}
+[; ;Button_app_1.c: 112: }
+[; ;Button_app_1.c: 114: LATC = 0xff;
+"114
+[e = _LATC -> -> 255 `i `uc ]
+[; ;Button_app_1.c: 115: delay_s(1);
+"115
+[e ( _delay_s (1 -> -> 1 `i `uc ]
+[; ;Button_app_1.c: 116: LATC = 0x00;
+"116
+[e = _LATC -> -> 0 `i `uc ]
+[; ;Button_app_1.c: 117: delay_s(1);
+"117
+[e ( _delay_s (1 -> -> 1 `i `uc ]
+[; ;Button_app_1.c: 119: OpenTimer0( 0b11111111 & 0b10111111 & 0b11011111 & 0b11110000);
+"119
+[e ( _OpenTimer0 (1 -> & & & -> 255 `i -> 191 `i -> 223 `i -> 240 `i `uc ]
+[; ;Button_app_1.c: 120: WriteTimer0(40960);
+"120
+[e ( _WriteTimer0 (1 -> -> 40960 `l `ui ]
+[; ;Button_app_1.c: 121: (INTCONbits.GIE = 1);
 "121
-[v _secs `uc ~T0 @X0 1 r1 ]
-"122
-[f ]
+[e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
+[; ;Button_app_1.c: 123: }
 "123
+[e :UE 415 ]
+}
+"126
+[v _delay_s `(v ~T0 @X0 1 ef1`uc ]
+"127
+{
+[; ;Button_app_1.c: 126: void delay_s(unsigned char secs)
+[; ;Button_app_1.c: 127: {
+[e :U _delay_s ]
+"126
+[v _secs `uc ~T0 @X0 1 r1 ]
+"127
+[f ]
+"128
 [v _i `uc ~T0 @X0 1 a ]
 [v _j `uc ~T0 @X0 1 a ]
-[; ;Button_app_1.c: 123: unsigned char i,j;
-[; ;Button_app_1.c: 124: for(j=0;j<secs;j++)
-"124
+[; ;Button_app_1.c: 128: unsigned char i,j;
+[; ;Button_app_1.c: 129: for(j=0;j<secs;j++)
+"129
 {
 [e = _j -> -> 0 `i `uc ]
-[e $U 421  ]
-"125
-[e :U 418 ]
-[; ;Button_app_1.c: 125: {
+[e $U 423  ]
+"130
+[e :U 420 ]
+[; ;Button_app_1.c: 130: {
 {
-[; ;Button_app_1.c: 126: for (i=0;i<25;i++)
-"126
+[; ;Button_app_1.c: 131: for (i=0;i<25;i++)
+"131
 {
 [e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 25 `i 422  ]
-[e $U 423  ]
-"127
-[e :U 422 ]
-[; ;Button_app_1.c: 127: _delay((unsigned long)((40)*(19660800/4000.0)));
+[e $ < -> _i `i -> 25 `i 424  ]
+[e $U 425  ]
+"132
+[e :U 424 ]
+[; ;Button_app_1.c: 132: _delay((unsigned long)((40)*(19660800/4000.0)));
 [e ( __delay (1 -> * -> -> 40 `i `d / -> -> 19660800 `l `d .4000.0 `ul ]
-"126
+"131
 [e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 25 `i 422  ]
-[e :U 423 ]
-"127
+[e $ < -> _i `i -> 25 `i 424  ]
+[e :U 425 ]
+"132
+}
+"134
 }
 "129
-}
-"124
 [e ++ _j -> -> 1 `i `uc ]
+[e :U 423 ]
+[e $ < -> _j `i -> _secs `i 420  ]
 [e :U 421 ]
-[e $ < -> _j `i -> _secs `i 418  ]
-[e :U 419 ]
-"129
+"134
 }
-[; ;Button_app_1.c: 129: }
-[; ;Button_app_1.c: 130: }
-"130
-[e :UE 417 ]
+[; ;Button_app_1.c: 134: }
+[; ;Button_app_1.c: 135: }
+"135
+[e :UE 419 ]
 }

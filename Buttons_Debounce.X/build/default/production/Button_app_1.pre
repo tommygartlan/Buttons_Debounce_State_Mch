@@ -4963,16 +4963,19 @@ unsigned char B6 :1;
 unsigned char B7 :1;
 };
 
-}Bit_Mask;
+}Button_Type;
 
-# 28 "Button_app_1.c"
-Bit_Mask Button_Press;
+# 34
+extern Button_Type Button_Press;
 
-# 33
+# 30 "Button_app_1.c"
+Button_Type Button_Press;
+
+# 35
 void Initial(void);
 void delay_s(unsigned char secs);
 
-# 41
+# 43
 unsigned char count_test =0;
 void __interrupt myIsr(void)
 {
@@ -4981,6 +4984,7 @@ void __interrupt myIsr(void)
 if(INTCONbits.TMR0IE && INTCONbits.TMR0IF) {
 
 Find_Button_Press();
+
 WriteTimer0(40960);
 INTCONbits.TMR0IF = 0;
 
@@ -5002,22 +5006,23 @@ Initial();
 
 while(1)
 {
-
-
-
-
 if((Button_Press.Full !=0 ? 1:0))
 {
 if(Button_Press.B0)
-PORTCbits.RC0 = 1;
+PORTCbits.RC0 = ~PORTCbits.RC0;
 
 if (Button_Press.B1)
-PORTCbits.RC0 = 0;
+PORTCbits.RC1 = ~PORTCbits.RC1;
+
+if (Button_Press.B2)
+PORTCbits.RC2 = ~PORTCbits.RC2;
+
+if (Button_Press.B3)
+PORTCbits.RC3 = ~PORTCbits.RC3;
 
 
 Button_Press.Full=0x00;
 }
-
 
 
 }
@@ -5028,6 +5033,7 @@ void Initial(void){
 ADCON1 = 0x0F;
 TRISB = 0xFF;
 TRISC = 0x00;
+
 
 LATC = 0x00;
 delay_s(1);

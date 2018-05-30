@@ -1,7 +1,7 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "28 Buttons_Debounce.c
-[c E4114 0 1 2 3 .. ]
-[n E4114 . Waiting Detected WaitForRelease Update  ]
+[c E4115 0 1 2 3 .. ]
+[n E4115 . Waiting Detected WaitForRelease Update  ]
 "15 Buttons_Debounce.h
 [s S402 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S402 . B0 B1 B2 B3 B4 B5 B6 B7 ]
@@ -10,7 +10,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S401 . Full . ]
 "269 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic18f4520.h
 [v _PORTB `Vuc ~T0 @X0 0 e@3969 ]
-"23 Buttons_Debounce.c
+"34 Buttons_Debounce.h
 [v _Button_Press `S401 ~T0 @X0 0 e ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
@@ -3733,9 +3733,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;Buttons_Debounce.h: 22: unsigned char B6 :1;
 [; ;Buttons_Debounce.h: 23: unsigned char B7 :1;
 [; ;Buttons_Debounce.h: 24: };
-[; ;Buttons_Debounce.h: 26: }Bit_Mask;
-[; ;Buttons_Debounce.c: 20: typedef enum {Waiting, Detected, WaitForRelease,Update} states;
-[; ;Buttons_Debounce.c: 23: extern Bit_Mask Button_Press;
+[; ;Buttons_Debounce.h: 26: }Button_Type;
+[; ;Buttons_Debounce.h: 34: extern Button_Type Button_Press;
+[; ;Buttons_Debounce.c: 24: typedef enum {Waiting, Detected, WaitForRelease,Update} states;
 "26 Buttons_Debounce.c
 [v _Find_Button_Press `(v ~T0 @X0 1 ef ]
 "27
@@ -3745,9 +3745,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U _Find_Button_Press ]
 [f ]
 "28
-[v F4122 `E4114 ~T0 @X0 1 s Button_State ]
+[v F4122 `E4115 ~T0 @X0 1 s Button_State ]
 [i F4122
-. `E4114 0
+. `E4115 0
 ]
 "29
 [v F4123 `uc ~T0 @X0 1 s Button_Count ]
@@ -3758,159 +3758,159 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v F4124 `S401 ~T0 @X0 1 s Temp_Press ]
 [; ;Buttons_Debounce.c: 28: static states Button_State=Waiting;
 [; ;Buttons_Debounce.c: 29: static unsigned char Button_Count=0;
-[; ;Buttons_Debounce.c: 30: static Bit_Mask Temp_Press;
-[; ;Buttons_Debounce.c: 34: switch (Button_State){
-"34
+[; ;Buttons_Debounce.c: 30: static Button_Type Temp_Press;
+[; ;Buttons_Debounce.c: 32: switch (Button_State){
+"32
 [e $U 405  ]
 {
-[; ;Buttons_Debounce.c: 35: case(Waiting):
-"35
+[; ;Buttons_Debounce.c: 33: case(Waiting):
+"33
 [e :U 406 ]
-[; ;Buttons_Debounce.c: 36: if(PORTB)
-"36
+[; ;Buttons_Debounce.c: 34: if(PORTB)
+"34
 [e $ ! != -> _PORTB `i -> -> -> 0 `i `Vuc `i 407  ]
-[; ;Buttons_Debounce.c: 37: {
-"37
+[; ;Buttons_Debounce.c: 35: {
+"35
 {
-[; ;Buttons_Debounce.c: 38: Button_State = Detected;
-"38
-[e = F4122 . `E4114 1 ]
-[; ;Buttons_Debounce.c: 39: Button_Count = 0;
-"39
+[; ;Buttons_Debounce.c: 36: Button_State = Detected;
+"36
+[e = F4122 . `E4115 1 ]
+[; ;Buttons_Debounce.c: 37: Button_Count = 0;
+"37
 [e = F4123 -> -> 0 `i `uc ]
-[; ;Buttons_Debounce.c: 41: Temp_Press.Full=PORTB;
-"41
+[; ;Buttons_Debounce.c: 39: Temp_Press.Full=PORTB;
+"39
 [e = . F4124 0 _PORTB ]
-"42
+"40
 }
 [e :U 407 ]
-[; ;Buttons_Debounce.c: 42: }
-[; ;Buttons_Debounce.c: 43: break;
-"43
+[; ;Buttons_Debounce.c: 40: }
+[; ;Buttons_Debounce.c: 41: break;
+"41
 [e $U 404  ]
-[; ;Buttons_Debounce.c: 44: case(Detected):
-"44
+[; ;Buttons_Debounce.c: 42: case(Detected):
+"42
 [e :U 408 ]
-[; ;Buttons_Debounce.c: 45: if (Temp_Press.Full == PORTB)
-"45
+[; ;Buttons_Debounce.c: 43: if (Temp_Press.Full == PORTB)
+"43
 [e $ ! == -> . F4124 0 `i -> _PORTB `i 409  ]
-[; ;Buttons_Debounce.c: 46: {
-"46
+[; ;Buttons_Debounce.c: 44: {
+"44
 {
-[; ;Buttons_Debounce.c: 47: ++Button_Count;
-"47
+[; ;Buttons_Debounce.c: 45: ++Button_Count;
+"45
 [e =+ F4123 -> -> 1 `i `uc ]
-[; ;Buttons_Debounce.c: 48: if (Button_Count > 10)
-"48
+[; ;Buttons_Debounce.c: 46: if (Button_Count > 10)
+"46
 [e $ ! > -> F4123 `i -> 10 `i 410  ]
-[; ;Buttons_Debounce.c: 49: {
-"49
+[; ;Buttons_Debounce.c: 47: {
+"47
 {
-[; ;Buttons_Debounce.c: 50: Button_State = WaitForRelease;
-"50
-[e = F4122 . `E4114 2 ]
-"51
+[; ;Buttons_Debounce.c: 48: Button_State = WaitForRelease;
+"48
+[e = F4122 . `E4115 2 ]
+"49
 }
 [e :U 410 ]
-"52
+"50
 }
-[; ;Buttons_Debounce.c: 51: }
-[; ;Buttons_Debounce.c: 52: }
+[; ;Buttons_Debounce.c: 49: }
+[; ;Buttons_Debounce.c: 50: }
 [e $U 411  ]
-"53
+"51
 [e :U 409 ]
-[; ;Buttons_Debounce.c: 53: else
-[; ;Buttons_Debounce.c: 54: {
-"54
+[; ;Buttons_Debounce.c: 51: else
+[; ;Buttons_Debounce.c: 52: {
+"52
 {
-[; ;Buttons_Debounce.c: 55: Button_State = Waiting;
-"55
-[e = F4122 . `E4114 0 ]
-"56
+[; ;Buttons_Debounce.c: 53: Button_State = Waiting;
+"53
+[e = F4122 . `E4115 0 ]
+"54
 }
 [e :U 411 ]
-[; ;Buttons_Debounce.c: 56: }
-[; ;Buttons_Debounce.c: 57: break;
-"57
+[; ;Buttons_Debounce.c: 54: }
+[; ;Buttons_Debounce.c: 55: break;
+"55
 [e $U 404  ]
-[; ;Buttons_Debounce.c: 58: case(WaitForRelease):
-"58
+[; ;Buttons_Debounce.c: 56: case(WaitForRelease):
+"56
 [e :U 412 ]
-[; ;Buttons_Debounce.c: 59: if (!PORTB)
-"59
+[; ;Buttons_Debounce.c: 57: if (!PORTB)
+"57
 [e $ ! ! != -> _PORTB `i -> -> -> 0 `i `Vuc `i 413  ]
-[; ;Buttons_Debounce.c: 60: {
-"60
+[; ;Buttons_Debounce.c: 58: {
+"58
 {
-[; ;Buttons_Debounce.c: 61: Button_State = Update;
-"61
-[e = F4122 . `E4114 3 ]
-"62
+[; ;Buttons_Debounce.c: 59: Button_State = Update;
+"59
+[e = F4122 . `E4115 3 ]
+"60
 }
 [e :U 413 ]
-[; ;Buttons_Debounce.c: 62: }
-[; ;Buttons_Debounce.c: 63: break;
-"63
+[; ;Buttons_Debounce.c: 60: }
+[; ;Buttons_Debounce.c: 61: break;
+"61
 [e $U 404  ]
-[; ;Buttons_Debounce.c: 64: case(Update):
-"64
+[; ;Buttons_Debounce.c: 62: case(Update):
+"62
 [e :U 414 ]
-[; ;Buttons_Debounce.c: 65: {
-"65
+[; ;Buttons_Debounce.c: 63: {
+"63
 {
-[; ;Buttons_Debounce.c: 66: Button_Press = Temp_Press;
-"66
+[; ;Buttons_Debounce.c: 64: Button_Press = Temp_Press;
+"64
 [e = _Button_Press F4124 ]
-[; ;Buttons_Debounce.c: 67: Button_State = Waiting;
+[; ;Buttons_Debounce.c: 65: Button_State = Waiting;
+"65
+[e = F4122 . `E4115 0 ]
+[; ;Buttons_Debounce.c: 66: Button_Count = 0;
+"66
+[e = F4123 -> -> 0 `i `uc ]
+[; ;Buttons_Debounce.c: 67: Temp_Press.Full=0;
 "67
-[e = F4122 . `E4114 0 ]
-[; ;Buttons_Debounce.c: 68: Button_Count = 0;
+[e = . F4124 0 -> -> 0 `i `uc ]
 "68
-[e = F4123 -> -> 0 `i `uc ]
-[; ;Buttons_Debounce.c: 69: Temp_Press.Full=0;
+}
+[; ;Buttons_Debounce.c: 68: }
+[; ;Buttons_Debounce.c: 69: break;
 "69
-[e = . F4124 0 -> -> 0 `i `uc ]
+[e $U 404  ]
+[; ;Buttons_Debounce.c: 70: default:
 "70
-}
-[; ;Buttons_Debounce.c: 70: }
-[; ;Buttons_Debounce.c: 71: break;
-"71
-[e $U 404  ]
-[; ;Buttons_Debounce.c: 72: default:
-"72
 [e :U 415 ]
-[; ;Buttons_Debounce.c: 73: {
-"73
+[; ;Buttons_Debounce.c: 71: {
+"71
 {
-[; ;Buttons_Debounce.c: 74: Button_State = Waiting;
-"74
-[e = F4122 . `E4114 0 ]
-[; ;Buttons_Debounce.c: 75: Button_Count = 0;
-"75
+[; ;Buttons_Debounce.c: 72: Button_State = Waiting;
+"72
+[e = F4122 . `E4115 0 ]
+[; ;Buttons_Debounce.c: 73: Button_Count = 0;
+"73
 [e = F4123 -> -> 0 `i `uc ]
-[; ;Buttons_Debounce.c: 76: Temp_Press.Full=0;
-"76
+[; ;Buttons_Debounce.c: 74: Temp_Press.Full=0;
+"74
 [e = . F4124 0 -> -> 0 `i `uc ]
-[; ;Buttons_Debounce.c: 77: Button_Press.Full=0;
-"77
+[; ;Buttons_Debounce.c: 75: Button_Press.Full=0;
+"75
 [e = . _Button_Press 0 -> -> 0 `i `uc ]
-"78
+"76
 }
-"79
+"77
 }
-[; ;Buttons_Debounce.c: 78: }
-[; ;Buttons_Debounce.c: 79: }
+[; ;Buttons_Debounce.c: 76: }
+[; ;Buttons_Debounce.c: 77: }
 [e $U 404  ]
-"34
+"32
 [e :U 405 ]
-[e [\ F4122 , $ . `E4114 0 406
- , $ . `E4114 1 408
- , $ . `E4114 2 412
- , $ . `E4114 3 414
+[e [\ F4122 , $ . `E4115 0 406
+ , $ . `E4115 1 408
+ , $ . `E4115 2 412
+ , $ . `E4115 3 414
  415 ]
-"79
+"77
 [e :U 404 ]
-[; ;Buttons_Debounce.c: 80: }
-"80
+[; ;Buttons_Debounce.c: 78: }
+"78
 [e :UE 403 ]
 }
